@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(version: 20151016185729) do
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
+  create_table "asked_to_answers", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "asked_to_answers", ["question_id"], name: "index_asked_to_answers_on_question_id", using: :btree
+  add_index "asked_to_answers", ["user_id"], name: "index_asked_to_answers_on_user_id", using: :btree
+
   create_table "comments", force: :cascade do |t|
     t.integer  "entity_id",   null: false
     t.string   "entity_type", null: false
@@ -38,6 +48,18 @@ ActiveRecord::Schema.define(version: 20151016185729) do
 
   add_index "comments", ["entity_id", "entity_type"], name: "index_comments_on_entity_id_and_entity_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.boolean  "seen_flag"
+  end
+
+  add_index "notifications", ["question_id"], name: "index_notifications_on_question_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"
@@ -64,6 +86,16 @@ ActiveRecord::Schema.define(version: 20151016185729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "tag_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "tag_users", ["question_id"], name: "index_tag_users_on_question_id", using: :btree
+  add_index "tag_users", ["user_id"], name: "index_tag_users_on_user_id", using: :btree
 
   create_table "user_repo_joins", force: :cascade do |t|
     t.integer  "user_id"
@@ -95,8 +127,14 @@ ActiveRecord::Schema.define(version: 20151016185729) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "asked_to_answers", "questions"
+  add_foreign_key "asked_to_answers", "users"
   add_foreign_key "comments", "users"
+  add_foreign_key "notifications", "questions"
+  add_foreign_key "notifications", "users"
   add_foreign_key "questions", "repositories"
   add_foreign_key "questions", "users"
+  add_foreign_key "tag_users", "questions"
+  add_foreign_key "tag_users", "users"
   add_foreign_key "votes", "users"
 end
