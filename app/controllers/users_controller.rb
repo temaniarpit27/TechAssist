@@ -1,3 +1,5 @@
+require 'net/http'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -19,6 +21,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  def
+  end
+    
   end
 
   def add_repo

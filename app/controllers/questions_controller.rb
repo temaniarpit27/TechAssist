@@ -37,6 +37,7 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    byebug
     @question = Question.new(question_params)
     byebug
     if @question.save
@@ -66,6 +67,7 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
+    byebug
     @question_user = @question.user_id
     if @question_user == question_params[:user_id] 
       destroyed_question = @question.destroy
@@ -87,7 +89,7 @@ class QuestionsController < ApplicationController
     end
 
     def update_question_params
-      params.permit(:title, :description , :repository_id)
+      params.permit(:title, :description , :repository_id )
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
