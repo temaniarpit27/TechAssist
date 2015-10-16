@@ -4,4 +4,11 @@ class Answer < ActiveRecord::Base
 
   has_many :comments, as: :entity, class_name: "::Comment"
 	has_many :votes, as: :entity, class_name: "::Vote"
+
+  after_save :create_notification
+
+  def create_notification
+    text = "#{self.user.name} has answered for your question #{self.question.title[0...20]}..."
+    Notification.create(:user_id => self.user_id, :question_id => self.question_id, :text => text)
+  end
 end
