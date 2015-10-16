@@ -24,7 +24,15 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @comment = Comment.new
+    if(comment_params[:answer_id].nil?)
+      @question = Question.find(comment_params[:question_id])
+      hash = {:entity_id => @question.entity_id, :entity_type => @question.entity_type,:user_id => @question.user_id, :comment=> comment_params[:comment]}
+    else
+      @question = Question.find(comment_params[:answer_id])
+      hash = {:entity_id => @question.entity_id, :entity_type => @question.entity_type,:user_id => @question.user_id, :comment=> comment_params[:comment]}
+      @comment = Comment.new(hash)
+    end
 
     respond_to do |format|
       if @comment.save
@@ -68,7 +76,7 @@ class CommentsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def comment_params
+    '''def comment_params
       params.require(:comment).permit(:entity_id, :entity_type, :comment, :user_id)
-    end
+    end'''
 end
