@@ -6,16 +6,17 @@ class User < ActiveRecord::Base
 	has_many :comments, class_name: "::Comment"
 	has_many :votes, class_name: "::Vote"
   has_many :repo_contributors, class_name: "::ReposContributor"
-	validates_presence_of :name  
+	validates_presence_of :name
+  has_many :notifications, class_name: "::Notification"
 
-  def get_all_users 
+  def get_all_users
     for id in 1..3
       url = URI("https://api.github.com/orgs/loconsolutions/members?page=#{id}&per_page=100")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
       req['Authorization'] = 'token '
       req['Accept'] = 'application/json'
-    
+
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
         http.request(req)
       }
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
         User.create(:name => user["login"], :email => "abc", :password => "pass")
       end
     end
-  end 
+  end
 
   def self.add_repository(params)
     tags = params[:tags]

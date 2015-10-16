@@ -17,6 +17,6 @@ class Question < ActiveRecord::Base
 
   def self.search_title(params)
     query = params[:string]
-    Question.search{fulltext query}.results
+    Question.search{fulltext query}.results[0...5]
   end
 end
