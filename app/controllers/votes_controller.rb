@@ -4,7 +4,7 @@ class VotesController < ApplicationController
   # GET /votes
   # GET /votes.json
   def index
-    @votes = Vote.all
+    @votes = vote.all
   end
 
   # GET /votes/1
@@ -14,61 +14,58 @@ class VotesController < ApplicationController
 
   # GET /votes/new
   def new
-    @vote = Vote.new
   end
 
-  # GET /votes/1/edit
   def edit
   end
-
-  # POST /votes
-  # POST /votes.json
+    
+ 
   def create
     @vote = Vote.new(vote_params)
-
-    respond_to do |format|
-      if @vote.save
-        format.html { redirect_to @vote, notice: 'Vote was successfully created.' }
-        format.json { render :show, status: :created, location: @vote }
-      else
-        format.html { render :new }
-        format.json { render json: @vote.errors, status: :unprocessable_entity }
-      end
+    if @vote.save
+      message,status = "vote Added" , 200
+    else
+      message,status = @vote.errors.messages.inspect , 422
     end
+    render json:{:message => message} , status: status
   end
 
-  # PATCH/PUT /votes/1
-  # PATCH/PUT /votes/1.json
   def update
-    respond_to do |format|
-      if @vote.update(vote_params)
-        format.html { redirect_to @vote, notice: 'Vote was successfully updated.' }
-        format.json { render :show, status: :ok, location: @vote }
+    if vote_update_params[:user_id] == @vote.user_id
+      if @vote.update_attributes(vote_update_params)
+        message,status = "Updates Successfully" , 200
       else
-        format.html { render :edit }
-        format.json { render json: @vote.errors, status: :unprocessable_entity }
+        message,status = @vote.errors.messages.inspect,422
       end
+    else
+      message,status = "Unauthorised" , 400
     end
+    render json:{:message => message} , status: status
   end
 
-  # DELETE /votes/1
-  # DELETE /votes/1.json
+
   def destroy
-    @vote.destroy
-    respond_to do |format|
-      format.html { redirect_to votes_url, notice: 'Vote was successfully destroyed.' }
-      format.json { head :no_content }
+    if vote_params[:user_id] = @vote.user_id
+      vote_destroyed = @vote.destroy
+      if vote_destroyed.destroyed?
+        message,status = "Successfully Destroyed" , 200
+      else
+        message,status = vote_destroyed.errors.messages.inspect,422
+      end
+    else
+      message,status = "Unauthorised" , 400
     end
+    render json:{:message => message} , status: status
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_vote
-      @vote = Vote.find(params[:id])
+      @vote = vote.find(params[:id])
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def vote_update_params
+      params.permit(:vote , :user_id)
+    end
     def vote_params
-      params.require(:vote).permit(:entity_id, :entity_type, :user_id, :vote_flag)
+      params.permit(:entity_id, :entity_type, :vote_flag, :user_id)
     end
 end
