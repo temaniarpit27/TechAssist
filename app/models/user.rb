@@ -6,4 +6,12 @@ class User < ActiveRecord::Base
 	has_many :comments, class_name: "::Comment"
 	has_many :votes, class_name: "::Vote"
 	validates_presence_of :name , :email , :password
+
+  def self.add_repository(params)
+    tags = params[:tags]
+    tags.each do |tag|
+      a = UserRepoJoin.new(:user_id => params[:user_id], :repository_id => tag)
+      a.save
+    end
+  end
 end
