@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
       url = URI("https://api.github.com/orgs/loconsolutions/members?page=#{id}&per_page=100")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
-      req['Authorization'] = 'token '
+      req['Authorization'] = 'token'
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|

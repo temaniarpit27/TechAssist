@@ -9,7 +9,7 @@ class RepoContributor < ActiveRecord::Base
       url = URI("https://api.github.com/repos/loconsolutions/#{repo.name}/contributors")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
-      req['Authorization'] = 'token 48a5f6ad3d97d3607ab0468cf32bc672fdc46dd2'
+      req['Authorization'] = 'token'
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|

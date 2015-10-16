@@ -1,33 +1,129 @@
-<p id="notice"><%= notice %></p>
+<div id="action-pop-up" class="pop-up bottom"></div>
+<div id="hover-pop-up"class="pop-up left">
+  <div class="arrow"></div>
+  <div class="inner"></div>
+</div>
 
-<h1>Listing Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th>Set flag</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.password %></td>
-        <td><%= user.set_flag %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="sub-nav">
+  <ul class="nav nav-tabs">
+    <% if @rm_panel %>
+      <li style="float:right;">
+        <%= render :partial => "short_forms/form_filters" %>
+        <a class="btn btn-info" style="width:13em;position:absolute;right:5px;top:190px; border-radius: 4px;" data-href="<%= short_forms_download_path(:format => 'csv') %>" id="download_forms">Download CSV</a>
+        <%= collection_select(:poc_filter, :id, RmPoc.all, :id, :name, {:prompt => 'Select POC'}, {:style => 'width:15em;position:absolute;right:5px;top:155px', :class => "form_filter"}) %>
+      </li>
+      <li class="current">
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'VERIFIED') %>" data-status="VERIFIED">VERIFIED</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'SENT_TO_BANK') %>" data-status="SENT_TO_BANK">SENT_TO_BANK</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'CALLBACK_COMPLETE') %>" data-status="CALLBACK_COMPLETE">CALLBACK_COMPLETE</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'DOCUMENTS_COLLECTED') %>" data-status="DOCUMENTS_COLLECTED">DOCUMENTS_COLLECTED</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'FILE_LOGGED_IN') %>" data-status="FILE_LOGGED_IN">FILE_LOGGED_IN</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'APPROVED') %>" data-status="APPROVED">APPROVED</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'REJECTED') %>" data-status="REJECTED">REJECTED</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'DISBURSED') %>" data-status="DISBURSED">DISBURSED</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'CANCELLED_BY_RM') %>" data-status="CANCELLED_BY_RM">CANCELLED</a>
+      </li>
+      <li>
+        <a class="list_type rm" href="<%= short_forms_with_status_path(:status => 'TRASH') %>" data-status="TRASH">TRASH</a>
+      </li>
+    <% else %>
+      
+      <li style="float:right;">
+        <a target="_blank" href="<%= new_lead_short_form_path %>" class="btn btn-info">NEW LEAD</a>
+      </li>
+      <li class="current">
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'LEAD') %>" data-status="LEAD">LEAD</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'DRAFT_APPLICATION') %>" data-status="DRAFT_APPLICATION">DRAFT</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'OTHER_DRAFT_APPLICATION') %>" data-status="OTHER_DRAFT_APPLICATION">UNTAGGED DRAFTS</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'SUBMITTED') %>" data-status="SUBMITTED">SUBMITTED</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'CALLBACK_SCHEDULED_WITH_CLIENT') %>" data-status="CALLBACK_SCHEDULED_WITH_CLIENT">CALLBACK</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'VERIFIED') %>" data-status="VERIFIED">VERIFIED</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_rm_callback_list_path() %>" data-rm-callback="true">RM CALLBACK</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'TRASH') %>" data-status="TRASH">TRASH</a>
+      </li>
+      <li>
+        <a class="list_type csrm" href="<%= short_forms_with_status_path(:status => 'CANCELLED') %>" data-status="CANCELLED">CANCELLED</a>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  </ul>
+</div>
+<div class="content">
+  <div class="list">
+    <div class="list-header">
+        <span class="list-name">New Requests</span>
+    </div>
 
-<br>
+    <div id="request-list-container"></div>
+  </div>
+  <div id="panel" style="padding-left: 10px;"></div>
+  <div class="clearfix"></div>
+</div>
 
-<%= link_to 'New User', new_user_path %>
+<script>
+  var request_type_url;
+  $(function(){
+
+    <% if @rm_panel %>
+      request_type_url='<%= short_forms_with_status_path(:status => 'VERIFIED') %>';
+    <% else %>
+      request_type_url='<%= short_forms_with_status_path(:status => 'LEAD') %>';
+    <% end %>
+    $('#request-list-container').load(request_type_url, function(){
+      $('#toast').hide();
+    });
+
+    $('body').on('click', '#create_log', function(e){
+      e.preventDefault();
+      $.ajax({
+          data: $('#new_short_forms_log').serialize(),
+          type: 'POST',
+          url: $('#new_short_forms_log').attr('action'),
+      }).done(function (data, textStatus, jqXHR) {
+          setNotification('success', 'Data successfully saved.');
+          $("#new_short_forms_log")[0].reset();
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+          if (jqXHR.status == '422') {
+              setNotification('error', 'Invalid form data');
+          }
+      });
+    })
+
+    $('body').on('change', '#short_forms_log_comment_type_id', function(){
+      if($('#short_forms_log_comment_type_id').val() == "1"){
+        $('#short_forms_log_meeting_date').attr('disabled', false);
+      }else{
+        $('#short_forms_log_meeting_date').attr('disabled', true);
+      }
+    })
+  });
+</script>
