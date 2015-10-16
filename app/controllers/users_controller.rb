@@ -23,6 +23,14 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def add_repo
+    User.add_repository(params)
+  end
+
+  def remove_repo
+    User.remove_repository(params)
+  end
+
   # POST /users
   # POST /users.json
   def create
