@@ -21,44 +21,43 @@ class AnswersController < ApplicationController
   def edit
   end
 
-  # POST /answers
-  # POST /answers.json
   def create
     @answer = Answer.new(answer_params)
-
-    respond_to do |format|
-      if @answer.save
-        format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
-        format.json { render :show, status: :created, location: @answer }
-      else
-        format.html { render :new }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
+    if @answer.save
+      message,status = "Answer Added" , 200
+    else
+      message,status = @answer.errors.messages.inspect , 422
     end
+    render json:{:message => message} , status: status
   end
 
-  # PATCH/PUT /answers/1
-  # PATCH/PUT /answers/1.json
   def update
-    respond_to do |format|
-      if @answer.update(answer_params)
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @answer }
+    if answer_params[:user_id] == @answer.user_id
+      if @answer.update_attributes(answer_params)
+        message,status = "Updated Successfully" , 200
       else
-        format.html { render :edit }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
+        message,status = @answer.errors.messages.inspect,422
       end
+    else
+      message,status = "Unauthorised" , 400
     end
+    render json:{:message => message} , status: status
   end
 
   # DELETE /answers/1
   # DELETE /answers/1.json
   def destroy
-    @answer.destroy
-    respond_to do |format|
-      format.html { redirect_to answers_url, notice: 'Answer was successfully destroyed.' }
-      format.json { head :no_content }
+    if answer_params[:user_id] = @answer.user_id
+      answer_destroyed = @answer.destroy
+      if answer_destroyed.destroyed?
+        message,status = "Successfully Destroyed" , 200
+      else
+        message,status = answer_destroyed.errors.messages.inspect,422
+      end
+    else
+      message,status = "Unauthorised" , 400
     end
+    render json: {:message => message} , status: status
   end
 
   private
@@ -69,6 +68,7 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:answer, :question_id, :user_id)
+      params.permit(:answer, :question_id , :user_id)
     end
+
 end

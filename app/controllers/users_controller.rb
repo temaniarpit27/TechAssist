@@ -23,6 +23,11 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def
+  end
+    
+  end
+
   def add_repo
     User.add_repository(params)
   end
