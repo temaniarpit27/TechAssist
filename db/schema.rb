@@ -11,10 +11,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016081305) do
+ActiveRecord::Schema.define(version: 20151016084920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.text     "answer"
+    t.integer  "question_id", null: false
+    t.integer  "user_id",     null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "entity_id",   null: false
+    t.string   "entity_type", null: false
+    t.string   "comment"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "comments", ["entity_id", "entity_type"], name: "index_comments_on_entity_id_and_entity_type", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "user_id",       null: false
+    t.integer  "repository_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "questions", ["repository_id"], name: "index_questions_on_repository_id", using: :btree
+  add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "name"
@@ -34,6 +69,26 @@ ActiveRecord::Schema.define(version: 20151016081305) do
     t.string   "email"
     t.string   "password"
     t.boolean  "set_flag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer  "entity_id",   null: false
+    t.string   "entity_type", null: false
+    t.integer  "user_id",     null: false
+    t.boolean  "vote_flag"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "votes", ["entity_id", "entity_type"], name: "index_votes_on_entity_id_and_entity_type", using: :btree
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
+
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "users"
+  add_foreign_key "comments", "users"
+  add_foreign_key "questions", "repositories"
+  add_foreign_key "questions", "users"
+  add_foreign_key "votes", "users"
 end
