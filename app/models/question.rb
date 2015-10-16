@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  belongs_to :user, class_name: "::User", foreign_key: :user_id
+  belongs_to :user, class_name: "::User", foreign_key: :user_id 
   belongs_to :repo_tag, class_name: "::Repository", foreign_key: :repository_id
   has_many :answers, class_name: "::Answer"
 
@@ -8,14 +8,14 @@ class Question < ActiveRecord::Base
   has_many :tag_users, class_name: "::TagUser"
   has_one :asked_to_answer, class_name: "::AskedToAnswer"
 
-  searchable do
-    text :title
-    integer :repository_id
-    integer :user_id
-    string :sort_title do
-      title.downcase.gsub(/^(an?|the)/, '')
-    end
-  end
+  # searchable do
+  #   text :title
+  #   integer :repository_id
+  #   integer :user_id
+  #   string :sort_title do
+  #     title.downcase.gsub(/^(an?|the)/, '')
+  #   end
+  # end
 
   def self.search_title(params)
     query = params[:string]

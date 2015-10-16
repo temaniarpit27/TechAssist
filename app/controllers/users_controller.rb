@@ -1,7 +1,7 @@
 require 'net/http'
 
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy , :get_user_home_details , :get_repo_home_details]
 
   # GET /users
   # GET /users.json
@@ -30,11 +30,6 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def
-  end
-    
-  end
-
   def add_repo
     User.add_repository(params)
   end
@@ -43,8 +38,18 @@ class UsersController < ApplicationController
     User.remove_repository(params)
   end
 
-  # POST /users
-  # POST /users.json
+  def get_user_home_details
+    all_details = @user.get_all_home_details(params)
+    render json: all_details , status: 200
+  end
+
+  def get_repo_home_details
+    byebug
+    all_details = @user.repo_related_home_details(params[:repository_id] , params[:status])
+    render json: all_details , status: 200
+  end
+
+
   def create
     @user = User.new(user_params)
 
@@ -59,8 +64,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params)
@@ -73,8 +76,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
@@ -86,7 +87,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:id].to_i)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

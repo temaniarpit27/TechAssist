@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/users/:id/home_page_details' => 'users#get_user_home_details'
+  get '/users/:id/repo_page_details' => 'users#get_repo_home_details'
+
+  get 'experts' => 'repositories#get_experts'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
