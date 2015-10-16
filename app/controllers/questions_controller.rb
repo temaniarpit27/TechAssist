@@ -24,41 +24,47 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    byebug
     @question = Question.new(question_params)
-
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.save
+      message,status = "Question Posted Successfully",200
+    else
+      message,status = @question.errors.messages.inspect,422
     end
+    render json: {:message => message} , status: status
   end
 
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
-    respond_to do |format|
-      if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
+    @question_user = @question.user_id
+    if @question_user == question_params[:user_id] 
+      if @question.update_attributes(update_question_params)
+        message,status = "Updated Successfully",200
       else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
+        message,status = @question.errors.messages.inspect,422
       end
+    else
+      message = "Unauthorized",400
     end
+    render json:{:message => message } , status: status
   end
 
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    @question.destroy
-    respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
-      format.json { head :no_content }
+    @question_user = @question.user_id
+    if @question_user == question_params[:user_id] 
+      destroyed_question = @question.destroy
+      if destroyed_question.destroyed?
+        message,status ="Question Deleted Successfully",200 
+      else
+        message,status=destroyed_question.errors.messages.inspect,422
+      end
+    else
+      message,status="Unauthorized",400
     end
+    render json:{:message => message} , status: status
   end
 
   private
@@ -67,8 +73,11 @@ class QuestionsController < ApplicationController
       @question = Question.find(params[:id])
     end
 
+    def update_question_params
+      params.permit(:title, :description , :repository_id)
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:title, :description)
+      params.permit(:title, :description , :repository_id , :user_id)
     end
 end
