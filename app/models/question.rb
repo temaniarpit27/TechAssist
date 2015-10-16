@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
-	belongs_to :user, class_name: "::User"
-	belongs_to :repo_tag, class_name: "::Repository"
+	belongs_to :user, class_name: "::User", foreign_key: :user_id
+	belongs_to :repo_tag, class_name: "::Repository", foreign_key: :repository_id
 	has_many :answers, class_name: "::Answer"
 
 	has_many :comments, as: :entity, class_name: "::Comment"
