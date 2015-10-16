@@ -6,6 +6,6 @@ class AskedToAnswer < ActiveRecord::Base
 
   def create_notification
     text = "#{self.question.user.name} has asked you a question"
-    Notification.create(:user_id => self.user_id, :question_id => self.question_id, :description => text)
+    Notification.create(:user_id => self.user_id, :question_id => self.question_id, :description => text, :seen_flag => false)
   end
 end
