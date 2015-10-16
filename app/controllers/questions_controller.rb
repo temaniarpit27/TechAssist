@@ -17,11 +17,11 @@ class QuestionsController < ApplicationController
     @answers =  @question.answers
     @comments =  @question.comments
     @votes = get_votes(@question)
-    for answer in @answers do 
+    for answer in @answers do
       answer[:comments] = answer.comments
       answer[:votes] = get_votes(answer)
     end
-    
+
    render json: {:questions => @question, :comments => @comments, :votes => @votes, :answers => @answers} , status: 200
   end
 
@@ -37,9 +37,7 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    byebug
     @question = Question.new(question_params)
-    byebug
     if @question.save
       message,status = "Question Posted Successfully",200
     else
@@ -52,7 +50,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1.json
   def update
     @question_user = @question.user_id
-    if @question_user == question_params[:user_id] 
+    if @question_user == question_params[:user_id]
       if @question.update_attributes(update_question_params)
         message,status = "Updated Successfully",200
       else
@@ -69,10 +67,10 @@ class QuestionsController < ApplicationController
   def destroy
     byebug
     @question_user = @question.user_id
-    if @question_user == question_params[:user_id] 
+    if @question_user == question_params[:user_id]
       destroyed_question = @question.destroy
       if destroyed_question.destroyed?
-        message,status ="Question Deleted Successfully",200 
+        message,status ="Question Deleted Successfully",200
       else
         message,status=destroyed_question.errors.messages.inspect,422
       end

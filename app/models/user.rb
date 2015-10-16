@@ -8,14 +8,17 @@ class User < ActiveRecord::Base
   has_many :repo_contributors, class_name: "::RepoContributor" , dependent: :destroy
 	validates_presence_of :name  
 
-  def get_all_users 
+  has_many :notifications, class_name: "::Notification"
+
+
+  def get_all_users
     for id in 1..3
       url = URI("https://api.github.com/orgs/loconsolutions/members?page=#{id}&per_page=100")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
       req['Authorization'] = 'token 9455d555cb1e8061a42bb2610af79e3b9201a72a'
       req['Accept'] = 'application/json'
-    
+
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
         http.request(req)
       }
@@ -25,7 +28,7 @@ class User < ActiveRecord::Base
         User.create(:name => user["login"], :email => "abc", :password => "pass")
       end
     end
-  end 
+  end
 
   def self.add_repository(params)
     tags = params[:tags]

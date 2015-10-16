@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Question:</strong>
+  <%= @asked_to_answer.question %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @asked_to_answer.user %>
+</p>
+
+<%= link_to 'Edit', edit_asked_to_answer_path(@asked_to_answer) %> |
+<%= link_to 'Back', asked_to_answers_path %>

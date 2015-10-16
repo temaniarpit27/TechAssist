@@ -37,6 +37,18 @@ class RepositoriesController < ApplicationController
     end
   end
 
+  def get_experts
+    @repository = Repository.find(params[:repository_id])
+    contributors,status = @repository.repo_contributors.order(contributions: :desc).limit(10), 400
+    experts = []
+    for contributor in contributors
+      experts.append(User.find_by_id(contributor.user_id))
+    end
+
+    render json: experts, status: 200 
+  end
+
+
   # PATCH/PUT /repositories/1
   # PATCH/PUT /repositories/1.json
   def update
