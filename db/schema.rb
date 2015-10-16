@@ -22,4 +22,18 @@ ActiveRecord::Schema.define(version: 20151016081305) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_repo_joins", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "repo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password"
+    t.boolean  "set_flag"
+  end
+
 end
