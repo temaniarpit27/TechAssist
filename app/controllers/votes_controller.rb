@@ -21,11 +21,30 @@ class VotesController < ApplicationController
     
  
   def create
-    @vote = Vote.new(vote_params)
-    if @vote.save
-      message,status = "vote Added" , 200
+    
+    if(Vote.find_by(:user_id => vote_params[:user_id], :entity_id => vote_params[:entity_id], :entity_id => vote_params[:entity_id]).nil?)
+      @vote = Vote.new(vote_params)
+      if @vote.save
+        message,status = "vote Added" , 200
+      else
+        message,status = @vote.errors.messages.inspect , 422
+      end
     else
-      message,status = @vote.errors.messages.inspect , 422
+      @vote = Vote.find_by(:user_id => vote_params[:user_id], :entity_id => vote_params[:entity_id], :entity_id => vote_params[:entity_id])
+      if(@vote.vote_flag != params[:vote_flag])
+        if @vote.update_attributes(vote_update_params)
+          message,status = "Updates Successfully" , 200
+        else
+          message,status = @vote.errors.messages.inspect,422
+        end
+      else
+        vote_destroyed = @vote.destroy
+        if vote_destroyed.destroyed?
+          message,status = "Successfully Destroyed" , 200
+        else
+          message,status = vote_destroyed.errors.messages.inspect,422
+        end
+      end  
     end
     render json:{:message => message} , status: status
   end
@@ -60,10 +79,10 @@ class VotesController < ApplicationController
 
   private
     def set_vote
-      @vote = vote.find(params[:id])
+      @vote = Vote.find(params[:id])
     end
     def vote_update_params
-      params.permit(:vote , :user_id)
+      params.permit(:vote_flag , :user_id,:entity_id, :entity_type)
     end
     def vote_params
       params.permit(:entity_id, :entity_type, :vote_flag, :user_id)
