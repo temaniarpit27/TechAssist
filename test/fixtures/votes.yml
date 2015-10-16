@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entity_id: 1
+  entity_type: MyString
+  user_id: 
+  vote_flag: false
+
+two:
+  entity_id: 1
+  entity_type: MyString
+  user_id: 
+  vote_flag: false
