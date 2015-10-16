@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Repository.create(name: "Upcoming-Projects")
+Repository.create(name: "housing-node")
+Repository.create(name: "housing-rails")
+Repository.create(name: "housing.clients")
+Repository.create(name: "housing.buy")
