@@ -31,12 +31,20 @@ class VotesController < ApplicationController
       end
     else
       @vote = Vote.find_by(:user_id => vote_params[:user_id], :entity_id => vote_params[:entity_id], :entity_id => vote_params[:entity_id])
-      vote_destroyed = @vote.destroy
-      if vote_destroyed.destroyed?
-        message,status = "Successfully Destroyed" , 200
+      if(@vote.vote_flag != params[:vote_flag])
+        if @vote.update_attributes(vote_update_params)
+          message,status = "Updates Successfully" , 200
+        else
+          message,status = @vote.errors.messages.inspect,422
+        end
       else
-        message,status = vote_destroyed.errors.messages.inspect,422
-      end
+        vote_destroyed = @vote.destroy
+        if vote_destroyed.destroyed?
+          message,status = "Successfully Destroyed" , 200
+        else
+          message,status = vote_destroyed.errors.messages.inspect,422
+        end
+      end  
     end
     render json:{:message => message} , status: status
   end
