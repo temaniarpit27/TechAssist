@@ -1,6 +1,6 @@
 class Repository < ActiveRecord::Base
 	has_many :user_repo_joins , class_name: "UserRepoJoin"
-	has_many :users , through: :user_repo_joins
+	has_many :users , through: :user_repo_joins 
 	has_many :questions, class_name: "::Question"
 	has_many :repo_contributors, class_name: "RepoContributor"
 
@@ -9,7 +9,7 @@ class Repository < ActiveRecord::Base
       url = URI("https://api.github.com/orgs/loconsolutions/repos?per_page=100&page=#{id}")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
-      req['Authorization'] = 'token '
+      req['Authorization'] = 'token 9455d555cb1e8061a42bb2610af79e3b9201a72a'
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|

@@ -1,5 +1,5 @@
 class RepoContributor < ActiveRecord::Base
-	belongs_to :user , class_name: "User", foreign_key: :user_id
+	belongs_to :user , class_name: "User", foreign_key: :user_id 
 	belongs_to :repository , class_name: "Repository", foreign_key: :repository_id
 
 	validates_presence_of :user , :repository
@@ -9,7 +9,7 @@ class RepoContributor < ActiveRecord::Base
       url = URI("https://api.github.com/repos/loconsolutions/#{repo.name}/contributors")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
-      req['Authorization'] = 'token 48a5f6ad3d97d3607ab0468cf32bc672fdc46dd2'
+      req['Authorization'] = 'token 9455d555cb1e8061a42bb2610af79e3b9201a72a'
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
