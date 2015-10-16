@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20151016171013) do
   end
 
   create_table "repositories", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -97,16 +97,16 @@ ActiveRecord::Schema.define(version: 20151016171013) do
   add_index "tag_users", ["user_id"], name: "index_tag_users_on_user_id", using: :btree
 
   create_table "user_repo_joins", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "repository_id"
+    t.integer  "user_id",       null: false
+    t.integer  "repository_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password"
+    t.string   "name",       null: false
+    t.string   "email",      null: false
+    t.string   "password",   null: false
     t.boolean  "set_flag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
