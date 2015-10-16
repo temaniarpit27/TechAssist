@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entity_id: 1
+  entity_type: MyString
+  comment: MyString
+  user_id: 
+
+two:
+  entity_id: 1
+  entity_type: MyString
+  comment: MyString
+  user_id: 
