@@ -49,8 +49,18 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     debug_inspector (0.0.2)
+    elasticsearch (1.0.13)
+      elasticsearch-api (= 1.0.13)
+      elasticsearch-transport (= 1.0.13)
+    elasticsearch-api (1.0.13)
+      multi_json
+    elasticsearch-transport (1.0.13)
+      faraday
+      multi_json
     erubis (2.7.0)
     execjs (2.6.0)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -70,8 +80,10 @@ GEM
     mini_portile (0.6.2)
     minitest (5.8.1)
     multi_json (1.11.2)
+    multipart-post (2.0.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    oj (2.12.14)
     pg (0.18.3)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -141,8 +153,10 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  elasticsearch
   jbuilder (~> 2.0)
   jquery-rails
+  oj
   pg
   rails (= 4.2.2)
   sass-rails (~> 5.0)
@@ -153,4 +167,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6
