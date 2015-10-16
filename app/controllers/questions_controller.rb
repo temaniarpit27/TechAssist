@@ -1,15 +1,28 @@
 class QuestionsController < ApplicationController
+  include VotesHelper
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   # GET /questions
   # GET /questions.json
   def index
     @questions = Question.all
+    render json: {:questions => @questions} , status: 200
   end
 
   # GET /questions/1
-  # GET /questions/1.json
+  # GET /questions/1.jso
   def show
+    @question =  Question.find(params[:id])
+
+    @answers =  @question.answers
+    @comments =  @question.comments
+    @votes = get_votes(@question)
+    for answer in @answers do 
+      answer[:comments] = answer.comments
+      answer[:votes] = get_votes(answer)
+    end
+    
+   render json: {:questions => @question, :comments => @comments, :votes => @votes, :answers => @answers} , status: 200
   end
 
   # GET /questions/new
@@ -24,8 +37,8 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    byebug
     @question = Question.new(question_params)
+    byebug
     if @question.save
       message,status = "Question Posted Successfully",200
     else
