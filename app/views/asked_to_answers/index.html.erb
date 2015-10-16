@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Asked To Answers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asked_to_answers.each do |asked_to_answer| %>
+      <tr>
+        <td><%= asked_to_answer.question %></td>
+        <td><%= asked_to_answer.user %></td>
+        <td><%= link_to 'Show', asked_to_answer %></td>
+        <td><%= link_to 'Edit', edit_asked_to_answer_path(asked_to_answer) %></td>
+        <td><%= link_to 'Destroy', asked_to_answer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asked to answer', new_asked_to_answer_path %>
