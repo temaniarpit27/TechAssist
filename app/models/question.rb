@@ -5,6 +5,8 @@ class Question < ActiveRecord::Base
 
   has_many :comments, as: :entity, class_name: "::Comment"
   has_many :votes, as: :entity, class_name: "::Vote"
+  has_many :tag_users, class_name: "::TagUser"
+  has_one :asked_to_answer, class_name: "::AskedToAnswer"
 
   searchable do
     text :title
