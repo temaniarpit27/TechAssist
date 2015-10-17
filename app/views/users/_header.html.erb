@@ -69,25 +69,7 @@ $('.repo_tag').click(function(){
 });
 
 $('#search_button').click(function(){
-  debugger
-  var param ={};
-  param.repo_id = repo_id;
-  param.q = $('#search_term').val();
-  $.ajax({
-    url: '/search_results',
-    type: 'GET',
-    data: param,
-    dataType: 'json',
-    success: function( response )
-    {
-      debugger
-      // alert(response.message)
-    },
-    error: function( response )
-    {
-      debugger
-      console.log('error');
-    }
-  });
-})
+  var url = "/search_results?repo_id=" + repo_id + "&q=" + $('#search_term').val();
+  window.open(url);
+});
 </script>

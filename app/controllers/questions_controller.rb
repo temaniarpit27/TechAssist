@@ -81,13 +81,14 @@ class QuestionsController < ApplicationController
 
   def search
     byebug
-    result = []
+    @result = []
     if params[:repo_id].to_i == 0
-      result = Question.search_full(params[:q])
+      @result = Question.search_full(params[:q])
     else
-      result = Question.search_with_repo(params)
+      @result = Question.search_with_repo(params)
     end
-    render json: result, status: 200
+    render 'index', status: 200
+    # render json: result, status: 200
   end
 
   private
