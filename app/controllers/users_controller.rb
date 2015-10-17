@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     @users = User.find(params[:user_id])
     @repos = Repository.all
     @checked_repos = UserRepoJoin.where(:user_id => params[:user_id].to_i).pluck(:repository_id)
-    render 'settings'
+    #render 'settings'
+    render 'header'
   end
 
   def update_details
