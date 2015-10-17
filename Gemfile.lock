@@ -191,8 +191,8 @@ DEPENDENCIES
   elasticsearch
   jbuilder (~> 2.0)
   jquery-rails
-  octokit (~> 4.1.1)
   less-rails
+  octokit (~> 4.1.1)
   oj
   pg
   rails (= 4.2.2)
