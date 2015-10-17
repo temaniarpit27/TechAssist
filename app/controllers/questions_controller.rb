@@ -33,6 +33,7 @@ class QuestionsController < ApplicationController
   def show_question
     @question = Question.find(params[:id].to_i)
     @vote = get_votes(@question)
+    @user_id = params[:user_id]
     render "show_question"
   end
 
