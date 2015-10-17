@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
+  
+
   resources :tag_users
   resources :asked_to_answers
   resources :notifications
   resources :users
   resources :repositories
 
+  
   resources :questions do
     resources :votes
     resources :answers
@@ -15,11 +18,13 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
-
+  
   get '/users/:id/home_page_details' => 'users#get_user_home_details'
   get '/users/:id/repo_page_details' => 'users#get_repo_home_details'
 
   get 'experts' => 'repositories#get_experts'
+  get '/users/:id/show_question' => 'questions#show_question'
+  get '/users/:id/post_question' => 'questions#post_question'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,37 @@
+<strong> Title </strong>
+<input type="text" id="question_title"></input>
+<strong> Description </strong>
+<textarea id="question_description"></textarea>
+<select id="repo_data">
+	<% @repos.each do |repo| %>
+		<option value="<%= repo.id %>"> <%= repo.name %> </option>
+	<% end %>
+</select> 
+<input type="button" value="Post Question" id="question_submit"></input>
+
+<script type="text/javascript">
+	$("#question_submit").on("click",function(){
+		data = {
+			"title":$("#question_title").val(),
+			"description":$("#question_description").val(),
+			"user_id":264,
+			"repository_id":$("#repo_data").val()
+		}
+		$.ajax({
+    		url: '/questions',
+		    data: data,
+		    type: 'POST',
+		    xhrFields: {
+		      withCredentials: true
+		    },
+		    success: function(data){
+		        window.location.reload()
+		        alert(data.message)
+		    },
+		    error: function(err){
+		    	alert(err.message)
+		    }
+  		})
+	})
+
+</script>

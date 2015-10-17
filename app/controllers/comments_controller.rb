@@ -21,6 +21,7 @@ class CommentsController < ApplicationController
     
  
   def create
+    byebug
     @comment = Comment.new(comment_params)
     if @comment.save
       message,status = "Comment Added" , 200
