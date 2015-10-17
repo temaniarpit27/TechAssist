@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
       req['Content-Type'] = "application/json"
       req['Authorization'] = 'token '
       req['Accept'] = 'application/json'
-
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
         http.request(req)
       }
