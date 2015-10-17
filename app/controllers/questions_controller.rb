@@ -13,16 +13,25 @@ class QuestionsController < ApplicationController
   # GET /questions/1.jso
   def show
     @question =  Question.find(params[:id])
-
     @answers =  @question.answers
     @comments =  @question.comments
     @votes = get_votes(@question)
-    for answer in @answers do 
+    for answer in @answers do
       answer[:comments] = answer.comments
       answer[:votes] = get_votes(answer)
     end
-    
+
    render json: {:questions => @question, :comments => @comments, :votes => @votes, :answers => @answers} , status: 200
+  end
+
+  def show_question
+    @question = Question.find(params[:id].to_i)
+    render "show_question"
+  end
+
+  def post_question
+    @repos = Repository.all
+    render "post_question"
   end
 
   # GET /questions/new
@@ -50,7 +59,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1.json
   def update
     @question_user = @question.user_id
-    if @question_user == question_params[:user_id] 
+    if @question_user == question_params[:user_id]
       if @question.update_attributes(update_question_params)
         message,status = "Updated Successfully",200
       else
@@ -66,10 +75,10 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1.json
   def destroy
     @question_user = @question.user_id
-    if @question_user == question_params[:user_id] 
+    if @question_user == question_params[:user_id]
       destroyed_question = @question.destroy
       if destroyed_question.destroyed?
-        message,status ="Question Deleted Successfully",200 
+        message,status ="Question Deleted Successfully",200
       else
         message,status=destroyed_question.errors.messages.inspect,422
       end

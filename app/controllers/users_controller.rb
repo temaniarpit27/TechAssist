@@ -1,12 +1,28 @@
 require 'net/http'
 
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy , :get_user_home_details , :get_repo_home_details]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+  end
+
+  #GET /users/1/settings
+  def settings
+    @users = User.find(params[:user_id])
+    @repos = Repository.all
+    @checked_repos = UserRepoJoin.where(:user_id => params[:user_id].to_i).pluck(:repository_id)
+    render 'settings'
+  end
+
+  def update_details
+    UserRepoJoin.where(:user_id =>params[:user_id].to_i).destroy_all
+    params[:checked_repos].each do |checked_repo|
+      UserRepoJoin.create(:user_id => params[:user_id].to_i , :repository_id => checked_repo.to_i)
+    end
+    render json: {:message => "update successfull"} , status: 200
   end
 
   # GET /users/1
@@ -23,11 +39,6 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def
-  end
-    
-  end
-
   def add_repo
     User.add_repository(params)
   end
@@ -36,8 +47,18 @@ class UsersController < ApplicationController
     User.remove_repository(params)
   end
 
-  # POST /users
-  # POST /users.json
+  def get_user_home_details
+    all_details = @user.get_all_home_details(params)
+    render json: all_details , status: 200
+  end
+
+  def get_repo_home_details
+    byebug
+    all_details = @user.repo_related_home_details(params[:repository_id] , params[:status])
+    render json: all_details , status: 200
+  end
+
+
   def create
     @user = User.new(user_params)
 
@@ -52,22 +73,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    byebug
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
@@ -79,7 +88,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:id].to_i)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
