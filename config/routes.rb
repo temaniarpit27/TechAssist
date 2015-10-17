@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
 
+  get '/repositories/populate_repos_and_contributors' => 'repositories#populate_repos_and_contributors'
+
   resources :tag_users
   resources :asked_to_answers
   resources :notifications
-  resources :users
+  resources :users do 
+    get 'settings' => 'users#settings'
+  end
   resources :repositories
-
+  get 'repo/get_all' => 'repositories#get_all_repos'
+  get '/home/:user_id' => 'users#home'
+  
   resources :questions do
     resources :votes
     resources :answers
@@ -15,9 +21,17 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
-
+  
+  
+  get '/users/:id/home_page_details' => 'users#get_user_home_details'
+  get '/users/:id/repo_page_details' => 'users#get_repo_home_details'
+  get 'users/:id/notifications' => 'notifications#show_notifications'
   get 'experts' => 'repositories#get_experts'
   get 'search_results' => 'questions#search'
+  get '/users/:id/show_question' => 'questions#show_question'
+  get '/users/:id/post_question' => 'questions#post_question'
+  post '/users/:id/update_details' => "users#update_details"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

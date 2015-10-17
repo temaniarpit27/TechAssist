@@ -1,0 +1,131 @@
+<div>
+  <h1 align="center"> Question Details </h1>
+</div>
+
+
+
+
+    <br>
+    <br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Title</span>
+      <input id="title_<%= @question.id %>" value = "<%= @question.title %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Description</span>
+    <span>      <input id="description_<%= @question.id %>" value = "<%= @question.description %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1"> </span>
+    </div>
+
+
+</br>
+<span class="label label-primary"><%= Repository.find(@question.repository_id).name %></span>
+
+
+</br>
+</br>
+</br>
+<strong> Comments For Question </strong>
+<% @question.comments.each do |qcomment| %>
+  <br>
+  <input type="text" id="comment_<%= qcomment.id %>" value="<%= qcomment.comment %>"></input>
+<% end %></br>
+
+
+
+
+
+
+
+<textarea type="text" id="question_comment" style="min-width: 50%"placeholder="Add comment"></textarea>
+<input type="button" class= "comment_button" value="Add Comment" data-item-id="<%= @question.id %>" data-item-type="Question"> </input>
+</br>
+</br>
+</br>
+</br>
+<% @question.answers.each do |qanswer| %>
+  <br>
+<br>
+
+
+
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Answer</span>
+      <input id="answer_<%= qanswer.id %>" value = "<%= qanswer.answer %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+    </div>
+
+	</br>
+</br>
+	<strong> Comments </strong>
+	<% qanswer.comments.each do |answer_comment| %>
+    <br>
+		<input type="text" id="acomment_<%= answer_comment.id %>" value="<%= answer_comment.comment %>"></input>
+	<% end %></br>
+  <div>
+<textarea type="text" style="min-width: 50%" id="answer_comment_<%=qanswer.id %>" data-item-id="<%= qanswer.id %>" data-item-type="Answer" placeholder="Add comment"></textarea>
+<input type="button" value="Add Comment" class= "comment_button" data-item-id="<%= qanswer.id %>" data-item-type="Answer"> </input></div>
+	</br>
+<% end %>
+<br>
+<br>
+<textarea style="min-width: 90%" id="answer_text" placeholder="Add your answer"></textarea>
+<br>
+<input class="btn btn-success" type="button" id="add_answer" value="Add Answer"> </input>
+<br>
+
+
+
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+    });
+    $("#add_answer").on("click",function(){
+    	data = {"user_id":1 ,"question_id":"<%= @question.id %>" , "answer":$("#answer_text").val() }
+    	$.ajax({
+    		url: '/questions/<%= @question.id %>/answers',
+		    data: data,
+		    type: 'POST',
+		    xhrFields: {
+		      withCredentials: true
+		    },
+		    success: function(data){
+		        window.location.reload()
+		    },
+		    error: function(err){
+		    }
+  		})
+    })
+    $(".comment_button").on("click",function(){
+    	var data={};
+    	if ($(this).data("item-type") == "Question"){
+    		data = {"user_id":1,"entity_type":"Question","entity_id":$(this).data("item-id"),"comment":$("#question_comment").val()
+    		};
+    	}
+    	else{
+    		var answer_box = "#answer_comment_"+ $(this).data("item-id")
+    		data = {
+    			"user_id":1,
+    			"entity_type":"Answer",
+    			"entity_id":$(this).data("item-id"),
+    			"comment":$(answer_box).val()
+    		};
+    	}
+    	$.ajax({
+    		url: '/questions/<%= @question.id %>/comments',
+		    data: data,
+		    type: 'POST',
+		    xhrFields: {
+		      withCredentials: true
+		    },
+		    success: function(data){
+		        window.location.reload()
+		    },
+		    error: function(err){
+		    }
+  		})
+	})
+
+</script>
+
+

@@ -1,27 +1,54 @@
-<p id="notice"><%= notice %></p>
+<% if @repositories.length!=0 %>
+  <div id="action-pop-up" class="pop-up bottom"></div>
+  <div id="hover-pop-up"class="pop-up left">
+    <div class="arrow"></div>
+    <div class="inner"></div>
+  </div>
+  <div class="content">
+  <div id="centeredmenu">
+   <ul>
+      <li><a href="#" class="active">Trending</a></li>
+      <li><a href="#">Recently Asked</a></li>
+      <li><a href="#">Unanswered</a></li>
+   </ul>
+</div>
+    <div class="list" style="overflow: scroll;">
+      <div class="list-header">
+          <span class="list-name"><center>Repository</center></span>
+      </div>
 
-<h1>Listing Repositories</h1>
+      <div id="request-list-container" style="margin-top:30px;">
+      <% for repository in @repositories do %>
+          <div class="w3-card-4" style="width:100%;">
+ 
+            <header class="w3-container w3-blue">
+              <a href=<%= "/repository_info/#{repository.id}" %> style="text-decoration:none;"><h6 style="color:azure;"><center><%= repository.name %></font></center></h6></a>
+            </header>
+            <div class="w3-container"></div>
+      <%end%>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+</div>
+      </div>
+    </div>
+    <div id="panel" style="padding-left: 10px;"></div>
+  </div>
+<%else%>
+  <h4 style="color:red; margin-left:10px; margin-top:39px;"> No record found.</h4>
+<%end%>
+<script>
+ $(document).ready(function(){
+  $.ajax({
+      url: "/repo/get_all",
+      method: 'GET'
+    });
+});
+</script>
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<body>
 
-  <tbody>
-    <% @repositories.each do |repository| %>
-      <tr>
-        <td><%= repository.name %></td>
-        <td><%= link_to 'Show', repository %></td>
-        <td><%= link_to 'Edit', edit_repository_path(repository) %></td>
-        <td><%= link_to 'Destroy', repository, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Repository', new_repository_path %>
+</body>
+</html> 

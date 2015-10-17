@@ -1,14 +1,25 @@
-<p id="notice"><%= notice %></p>
+<span> Title </span>
+<input type="text" id="title_<%= @question.id %>" value = "<%= @question.title %>"> </input>
+<span> Description </span>
+<input type="text" id="description_<%= @question.id %>" value = "<%= @question.description %>">  </input>
+<span> Tag </span>
+<span> <%= Repository.find_by(@question.repository_id).name %> </span>
+<span> Comments </span>
+<% @question.comments.each do |qcomment| %>
+	<input type="text" id="comment_<%= qcomment.id} %>" value="<%= qcomment.comment %>"><input>
+	<input type="button" id="qcedit_<%= qcomment.id %>" value="Edit"></input>
+	<input type="button" id="qcremove_<%= qcomment.id %>" value="Remove"></input>
+<% end %>
+<% @question.answers.each do |qanswer| %>
+	<input type="text" id="answer_<%= qanswer.id %>" value="<%= qanswer.answer %>"><input>
+	<input type="button" id="aedit_<%= qanswer.id %>" value="Edit"></input>
+	<input type="button" id="aremove_<%= qanswer.id %>" value="Remove"></input>
+	<span> Comments </span>
+	<% qanswer.comments.each do |answer_comment| %>
+		<input type="text" id="acomment_<%= answer_comment.id %>" value="<%= answer_comment.comment %>"><input>
+		<input type="button" id="acedit_<%= qcomment.id %>" value="Edit"></input>
+		<input type="button" id="acremove_<%= qcomment.id %>" value="Remove"></input>
+	<% end %>
+<% end %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @question.title %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @question.description %>
-</p>
-
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>

@@ -1,0 +1,17 @@
+<div id="profile Header" align = "center">
+  <h3> My Notifications </h3>
+  <div id="count" class="container"> You have <%= @notificationsUnread.count %> new notifications</div>
+  <br />
+  <br />
+  <hr />
+  <div id="notifications" class="container col-md-12">
+  <% @notificationsUnread.each do |notification| %>
+    <div id="notif-row" class="row">
+
+    <h4> <a href="http://localhost:3000/users/<%=notification.question_id%>/show_question"><%= notification.description %> </a> </h4>
+    </div>
+  <% end %>
+</div>
+</div>
+
+

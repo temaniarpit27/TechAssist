@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%= repo_list = Repository.limit(10) %>
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -10,7 +11,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%= user_path(id: 1) %>">Sabse Pucho</a>
+      <a class="navbar-brand" href="<%= user_path(id: 1) %>">TechAsist</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,6 +45,14 @@
             <li><a href="#">Separated link</a></li>
           </ul>
         </li>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+      <ul class="nav navbar-nav" style="border-top:none">
+       <a class="navbar-brand" href="#">TechAssist</a>
+          <li class="navbar-right"><a href="/users/<%=@user_id%>/post_question" class="glyphicon glyphicon-question-sign"></a></li> 
+          <li class="navbar-right"><a href="/settings" class="glyphicon glyphicon-wrench"></a></li> 
+          <li class="navbar-right"><a href="/users/<%=@user_id%>/notifications" class="glyphicon glyphicon-bell"></a></li>
+          <li href="/home/<%=@user_id%>" class="active navbar-right"><a href="#" class="glyphicon glyphicon-home"></a></li>
       </ul>
     </div>
   </div>
@@ -73,3 +82,6 @@ $('#search_button').click(function(){
   window.open(url);
 });
 </script>
+=======
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+>>>>>>> 0ac6134c189388bf1f1621e4fd51d0d0cea10244

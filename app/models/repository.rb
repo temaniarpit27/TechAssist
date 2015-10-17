@@ -1,6 +1,6 @@
 class Repository < ActiveRecord::Base
 	has_many :user_repo_joins , class_name: "UserRepoJoin"
-	has_many :users , through: :user_repo_joins
+	has_many :users , through: :user_repo_joins 
 	has_many :questions, class_name: "::Question"
 	has_many :repo_contributors, class_name: "RepoContributor"
 
@@ -10,6 +10,9 @@ class Repository < ActiveRecord::Base
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
       req['Authorization'] = 'token c59bf60b84754901e5dad2bb7d4ecf379e80cef9'
+
+      req['Authorization'] = 'token'
+
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|

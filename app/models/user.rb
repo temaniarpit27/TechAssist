@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
       req['Content-Type'] = "application/json"
       req['Authorization'] = 'token '
       req['Accept'] = 'application/json'
-
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
         http.request(req)
       }
@@ -39,6 +38,36 @@ class User < ActiveRecord::Base
   def self.populate_users_table
     uri = URI('https://api.github.com/orgs/loconsolutions/public_members')
     users = Oj.load(Net::HTTP.get(uri))
-    byebug
+  end
+
+  def repo_related_home_details(repository_id , status)
+    unanswered_questions = []
+    repo_questions = Question.where(:repository_id => repository_id).order(created_at: :desc) if status == "recent"
+    repo_questions = Question.where(:repository_id => repository_id).joins(:votes).select("questions.id,questions.title,questions.description, count(votes.id) as vote_count").group("questions.id").order("vote_count DESC") if status == "trending"
+    questions_in_repo = Question.where(:repository_id => repository_id).pluck(:id)
+    questions_in_repo_having_answer =  Question.where(:repository_id => repository_id).joins(:answers).select("questions.id").group("questions.id").pluck(:id)
+    questions_in_repo.each do |question|
+      if !(questions_in_repo_having_answer.include? question)
+        unanswered_questions.push(question)
+      end
+    end
+    repo_questions = Questions.where(:id => unanswered_questions) if status == "unanswered"
+    return repo_questions
+  end
+
+  def get_all_home_details(params)
+    unanswered_questions = []
+    user_repo_watch = UserRepoJoin.where(:user_id => params[:id].to_i).pluck(:repository_id)
+    repo_questions = Question.where(:repository_id => user_repo_watch).order(created_at: :desc) if params[:status] == "recent"
+    repo_questions = Question.where(:repository_id => user_repo_watch).joins(:votes).select("questions.id,questions.title,questions.description, count(votes.id) as vote_count").group("questions.id").order("vote_count DESC") if params[:status] == "trending"
+    questions_in_repo = Question.where(:repository_id => user_repo_watch).pluck(:id)
+    questions_in_repo_having_answer =  Question.where(:repository_id => user_repo_watch).joins(:answers).select("questions.id").group("questions.id").pluck(:id)
+    questions_in_repo.each do |question|
+      if !(questions_in_repo_having_answer.include? question)
+        unanswered_questions.push(question)
+      end
+    end
+    repo_questions = Question.where(:id => unanswered_questions) if params[:status] == "unanswered"
+    return repo_questions
   end
 end

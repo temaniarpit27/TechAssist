@@ -1,3 +1,20 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+ul{
+  width:100%;
+  overflow:hidden;
+  border-top:1px solid #ccc;
+}
+li{
+  line-height:1.5em;
+  float:left;
+  display:inline;
+}
+
+#double li  { width:50%;} 
+#repo_list1 li  { width:33.333%; } 
+#repo_list li    { width:25%; } 
+#six li     { width:16.666%; }

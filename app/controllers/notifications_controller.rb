@@ -1,3 +1,5 @@
+require 'net/http'
+
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
 
@@ -19,6 +21,16 @@ class NotificationsController < ApplicationController
 
   # GET /notifications/1/edit
   def edit
+  end
+
+  def show_notifications
+    @notificationsUnread = Notification.where(:user_id => params[:id], :seen_flag => false)
+    ids = @notificationsUnread.pluck(:id)
+    @qIds = @notificationsUnread.pluck(:question_id)
+    #ids.each do |id|
+      #Notification.find(id).update(:seen_flag=>true)
+    #end
+    render 'notification'
   end
 
   # POST /notifications

@@ -13,7 +13,6 @@ class QuestionsController < ApplicationController
   # GET /questions/1.jso
   def show
     @question =  Question.find(params[:id])
-
     @answers =  @question.answers
     @comments =  @question.comments
     @votes = get_votes(@question)
@@ -23,6 +22,17 @@ class QuestionsController < ApplicationController
     end
 
    render json: {:questions => @question, :comments => @comments, :votes => @votes, :answers => @answers} , status: 200
+  end
+
+  def show_question
+    @question = Question.find(params[:id].to_i)
+    render "show_question"
+  end
+
+  def post_question
+    @user_id = params[:id].to_i
+    @repos = Repository.all
+    render "post_question"
   end
 
   # GET /questions/new
@@ -37,6 +47,7 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    byebug
     @question = Question.new(question_params)
     if @question.save
       message,status = "Question Posted Successfully",200
@@ -102,6 +113,6 @@ class QuestionsController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.permit(:title, :description , :repository_id , :user_id)
+      params.require(:question).permit(:title, :description,:repository_id , :user_id)
     end
 end
