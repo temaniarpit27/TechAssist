@@ -17,10 +17,10 @@ class QuestionsController < ApplicationController
     @comments =  @question.comments
     @votes = get_votes(@question)
     answers_hash = []
-    
+
     for answer in @answers do
       answer_hash = {}
-      answer_hash[:answer]  = answer 
+      answer_hash[:answer]  = answer
       answer_hash[:comments] = answer.comments
       answer_hash[:votes] = get_votes(answer)
       answers_hash.append(answer_hash)
@@ -54,7 +54,6 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    byebug
     @question = Question.new(question_params)
     if @question.save
       message,status = "Question Posted Successfully",200
@@ -98,7 +97,6 @@ class QuestionsController < ApplicationController
   end
 
   def search
-    byebug
     @result = []
     if params[:repo_id].to_i == 0
       @result = Question.search_full(params[:q])

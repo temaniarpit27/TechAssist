@@ -24,7 +24,6 @@ class UsersController < ApplicationController
   end
 
   def update_details
-    byebug
     UserRepoJoin.where(:user_id =>params[:user_id].to_i).destroy_all
     params[:checked_repos].each do |checked_repo|
       UserRepoJoin.create(:user_id => params[:user_id].to_i , :repository_id => checked_repo.to_i)
@@ -81,7 +80,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    byebug
   end
 
   def destroy
