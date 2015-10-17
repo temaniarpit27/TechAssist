@@ -40,7 +40,9 @@
 
 <script>
   $(document).ready(function(){
-    localStorage.removeItem("repo_id");
+    var userId = @user_id
+   localStorage.setItem("userId", userId)
+  localStorage.removeItem("repo_id");
   });
 
   $(".trending").on('click', function(e){
