@@ -47,6 +47,7 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    byebug
     @question = Question.new(question_params)
     if @question.save
       message,status = "Question Posted Successfully",200
