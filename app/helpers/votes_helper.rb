@@ -8,10 +8,13 @@ module VotesHelper
 				upvotes = upvotes+1
 			else
 				downvotes = downvotes +1
-			end
-			
+			end	
 		end
 
 		{upvotes: upvotes, downvotes: downvotes}
 	end
+
+	 def to_boolean(str)
+      str == 'true'
+    end
 end
