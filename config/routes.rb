@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get 'settings' => 'users#settings'
   end
   resources :repositories
+
+  resources :votes
   get 'repo/get_all' => 'repositories#get_all_repos'
   get '/home/:user_id' => 'users#home'
   
