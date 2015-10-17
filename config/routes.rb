@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
   resources :repositories
   get 'repo/get_all' => 'repositories#get_all_repos'
-
+  get '/home' => 'users#home'
   
   resources :questions do
     resources :votes

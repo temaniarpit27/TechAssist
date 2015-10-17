@@ -9,6 +9,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def home
+    @repositories = Repository.all
+  end
+
   #GET /users/1/settings
   def settings
     @users = User.find(params[:user_id])
