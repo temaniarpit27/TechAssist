@@ -1,7 +1,7 @@
 <% if @question.length!=0 %>
 	<% for question in @question %>
 	<div style="border:1px solid #000;margin-top:5px;">
-		<a href="/users/<%= question.id%>/show_question"><%= question.title %></a>
+		<a href="/users/<%= question.id%>/show_question/<%= @uesr_id %><%= %>"><%= question.title %></a>
 	</div>
 	<% end %>
 <% else %>
