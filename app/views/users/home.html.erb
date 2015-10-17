@@ -1,14 +1,15 @@
+<%= render 'users/header'%>
 <% if @repositories.length!=0 %>
   <div id="action-pop-up" class="pop-up bottom"></div>
   <div id="hover-pop-up"class="pop-up left">
     <div class="arrow"></div>
     <div class="inner"></div>
   </div>
-  <div class="content">
-  <div id="centeredmenu">
+  <div class="content" style="margin-top:30px">
+  <div style="margin-left: 500px;background: #fff;">
    <ul>
-      <li><a href="#" class="active">Trending</a></li>
-      <li><a href="#">Recently Asked</a></li>
+      <li><a href="#">Trending</a></li>
+      <li><a href="#" class="active">Recently Asked</a></li>
       <li><a href="#">Unanswered</a></li>
    </ul>
 </div>

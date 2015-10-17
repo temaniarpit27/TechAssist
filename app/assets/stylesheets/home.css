@@ -10,17 +10,17 @@
   background-color: grey;
 }
 
-#centeredmenu {
+#tabmenu {
    float:left;
    width:100%;
    background:#fff;
    border-bottom:4px solid #000;
-/*   overflow:hidden;*/
+   overflow:hidden;
    position:relative;
 }
-#centeredmenu ul {
-   /*clear:left;
-   float:left;*/
+#tabmenu ul {
+   clear:left;
+   float:left;
    list-style:none;
    margin:0;
    padding:0;
@@ -28,7 +28,7 @@
    left:50%;
    text-align:center;
 }
-#centeredmenu ul li {
+#tabmenu ul li {
    display:block;
    float:left;
    list-style:none;
@@ -37,7 +37,7 @@
    position:relative;
    right:50%;
 }
-#centeredmenu ul li a {
+#tabmenu ul li a {
    display:block;
    margin:0 0 0 1px;
    padding:3px 10px;
@@ -46,12 +46,12 @@
    text-decoration:none;
    line-height:1.3em;
 }
-#centeredmenu ul li a:hover {
+#tabmenu ul li a:hover {
    background:#369;
    color:#fff;
 }
-#centeredmenu ul li a.active,
-#centeredmenu ul li a.active:hover {
+#tabmenu ul li a.active,
+#tabmenu ul li a.active:hover {
    color:#fff;
    background:#000;
    font-weight:bold;

@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def home
+    @user_id = params[:user_id]
     @repositories = Repository.all
   end
 
