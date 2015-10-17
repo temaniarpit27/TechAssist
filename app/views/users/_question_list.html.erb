@@ -1,0 +1,9 @@
+<% if @question.length!=0 %>
+	<% for question in @question %>
+	<div style="border:1px solid #000;margin-top:5px;">
+		<a href="/users/<%= question.id%>/show_question"><%= question.title %></a>
+	</div>
+	<% end %>
+<% else %>
+	<h4 style="color:red; margin-left:10px; margin-top:39px;"> No Trending Questions.</h4>
+<% end%>

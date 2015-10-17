@@ -23,11 +23,14 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
-  
-  
+  get '/users/:user_id/get_home_questions/:status' => 'users#get_home_questions'
   get '/users/:id/home_page_details' => 'users#get_user_home_details'
-  get '/users/:id/repo_page_details' => 'users#get_repo_home_details'
+  get '/users/:id/repo_page_details/:repository_id/:status' => 'users#get_repo_home_details'
+
+
+  
   get 'users/:id/notifications' => 'notifications#show_notifications'
+
   get 'experts' => 'repositories#get_experts'
   get 'search_results' => 'questions#search'
   get '/users/:id/show_question' => 'questions#show_question'
