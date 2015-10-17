@@ -13,7 +13,16 @@ class UsersController < ApplicationController
   def settings
     @users = User.find(params[:user_id])
     @repos = Repository.all
+    @checked_repos = UserRepoJoin.where(:user_id => params[:user_id].to_i).pluck(:repository_id)
     render 'settings'
+  end
+
+  def update_details
+    UserRepoJoin.where(:user_id =>params[:user_id].to_i).destroy_all
+    params[:checked_repos].each do |checked_repo|
+      UserRepoJoin.create(:user_id => params[:user_id].to_i , :repository_id => checked_repo.to_i)
+    end
+    render json: {:message => "update successfull"} , status: 200
   end
 
   # GET /users/1
@@ -65,15 +74,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    byebug
   end
 
   def destroy
