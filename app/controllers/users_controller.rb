@@ -9,6 +9,13 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  #GET /users/1/settings
+  def settings
+    @users = User.find(params[:user_id])
+    @repos = Repository.all
+    render 'settings'
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show

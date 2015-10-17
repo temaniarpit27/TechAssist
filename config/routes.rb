@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :tag_users
   resources :asked_to_answers
   resources :notifications
-  resources :users
+  resources :users do 
+    get 'settings' => 'users#settings'
+  end
   resources :repositories
 
   

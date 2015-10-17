@@ -21,6 +21,17 @@ class NotificationsController < ApplicationController
   def edit
   end
 
+  def check_unseen_notifications(params)
+    Notification.where(:user_id => user_id, :seen_flag => false).as_json
+  end
+
+  def get_unseen_notifications(params)
+    notifications = Notification.where(:user_id => user_id, :seen_flag => false)
+    ids = notifications.pluck(:id)
+    Notification.find(ids).update_all(:seen_flag => true)
+    notifications
+  end
+
   # POST /notifications
   # POST /notifications.json
   def create
