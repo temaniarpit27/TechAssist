@@ -74,7 +74,6 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    byebug
     @question_user = @question.user_id
     if @question_user == question_params[:user_id]
       destroyed_question = @question.destroy
@@ -100,6 +99,6 @@ class QuestionsController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.permit(:title, :description , :repository_id , :user_id)
+      params.require(:question).permit(:title, :description,:repository_id , :user_id)
     end
 end
