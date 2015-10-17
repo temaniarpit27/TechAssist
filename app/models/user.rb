@@ -41,7 +41,6 @@ class User < ActiveRecord::Base
   end
 
   def repo_related_home_details(repository_id , status)
-    byebug
     unanswered_questions = []
     repo_questions = Question.where(:repository_id => repository_id).order(created_at: :desc) if status == "recent"
     repo_questions = Question.where(:repository_id => repository_id).joins(:votes).select("questions.id,questions.title,questions.description, count(votes.id) as vote_count").group("questions.id").order("vote_count DESC") if status == "trending"
