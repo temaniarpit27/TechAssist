@@ -26,6 +26,14 @@ class RepositoriesController < ApplicationController
     render :json => @repositories
   end
 
+
+  def populate_repos_and_contributors
+    Repository.new.get_all_repos
+    User.new.get_all_users
+    RepoContributor.new.get_all_contributors
+    render json: {message: "Done"}, status: 200 
+  end
+
   # POST /repositories
   # POST /repositories.json
   def create

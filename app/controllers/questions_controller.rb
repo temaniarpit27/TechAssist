@@ -30,6 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def post_question
+    @user_id = params[:id].to_i
     @repos = Repository.all
     render "post_question"
   end
@@ -46,6 +47,7 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    byebug
     @question = Question.new(question_params)
     if @question.save
       message,status = "Question Posted Successfully",200
@@ -99,6 +101,6 @@ class QuestionsController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.permit(:title, :description , :repository_id , :user_id)
+      params.require(:question).permit(:title, :description,:repository_id , :user_id)
     end
 end

@@ -10,6 +10,7 @@ class RepoContributor < ActiveRecord::Base
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
       req['Authorization'] = 'token 9455d555cb1e8061a42bb2610af79e3b9201a72a'
+
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
