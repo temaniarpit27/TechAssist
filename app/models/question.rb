@@ -11,14 +11,14 @@ class Question < ActiveRecord::Base
   has_many :tag_users, class_name: "::TagUser"
   has_one :asked_to_answer, class_name: "::AskedToAnswer"
 
-  searchable do
-    text :title
-    integer :repository_id
-    integer :user_id
-    string :sort_title do
-      title.downcase.gsub(/^(an?|the)/, '')
-    end
-  end
+  # searchable do
+  #   text :title
+  #   integer :repository_id
+  #   integer :user_id
+  #   string :sort_title do
+  #     title.downcase.gsub(/^(an?|the)/, '')
+  #   end
+  # end
 
   def self.search_title(params)
     query = params[:string]

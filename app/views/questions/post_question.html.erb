@@ -1,0 +1,43 @@
+<h2 style="text-align:center;"> Post a Question </h2>
+<strong> Title </strong>
+<input type="text" class="form-control" aria-describedby="basic-addon1" id="question_title"></input>
+<div class="form-group">
+  <strong> Description </strong>
+  <textarea class="form-control" rows="5" id="question_description"></textarea>
+</div>
+<strong> Select Repo </strong></br>
+<select id="repo_data" class="selectpicker" style="margin-top:5px;">
+	<% @repos.each do |repo| %>
+		<option value="<%= repo.id %>"> <%= repo.name %> </option>
+	<% end %>
+</select> </br>
+
+<input type="button" value="Post Question" id="question_submit" class="btn btn-default" style="margin-top:24px;margin-left:546px;"></input>
+
+<script type="text/javascript">
+
+	$("#question_submit").on("click",function(){
+		data = {
+			"title":$("#question_title").val(),
+			"description":$("#question_description").val(),
+			"user_id":264,
+			"repository_id":$("#repo_data").val()
+		}
+		$.ajax({
+    		url: '/questions',
+		    data: data,
+		    type: 'POST',
+		    xhrFields: {
+		      withCredentials: true
+		    },
+		    success: function(data){
+		        window.location.reload()
+		        alert(data.message)
+		    },
+		    error: function(err){
+		    	alert(err.message)
+		    }
+  		})
+	})
+
+</script>
