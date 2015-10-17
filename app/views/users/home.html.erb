@@ -36,6 +36,8 @@
 <%end%>
 <script>
  $(document).ready(function(){
+  var userId = @user_id
+  localStorage.setItem("userId", userId)
   $.ajax({
       url: "/repo/get_all",
       method: 'GET'
