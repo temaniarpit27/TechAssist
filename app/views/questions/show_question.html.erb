@@ -46,12 +46,18 @@
 </br>
 <% @question.answers.each do |qanswer| %>
   <br>
-<strong> Answer </strong>
 <br>
-	<input type="text" id="answer_<%= qanswer.id %>" value="<%= qanswer.answer %>"></input>
+
+
+
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Answer</span>
+      <input id="answer_<%= qanswer.id %>" value = "<%= qanswer.answer %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+    </div>
+
 	</br>
 </br>
-	<strong> Answer_Comments </strong>
+	<strong> Comments </strong>
 	<% qanswer.comments.each do |answer_comment| %>
     <br>
 		<input type="text" id="acomment_<%= answer_comment.id %>" value="<%= answer_comment.comment %>"></input>
@@ -62,8 +68,9 @@
 <% end %>
 <br>
 <br>
-<textarea id="answer_text" placeholder="Add your answer"></textarea>
-<input type="button" id="add_answer" value="Add Answer"> </input>
+<textarea style="min-width: 90%" id="answer_text" placeholder="Add your answer"></textarea>
+<br>
+<input class="btn btn-success" type="button" id="add_answer" value="Add Answer"> </input>
 <br>
 
 
