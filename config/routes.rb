@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  
+  get '/repositories/populate_repos_and_contributors' => 'repositories#populate_repos_and_contributors'
 
   resources :tag_users
   resources :asked_to_answers
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
+  
   
   get '/users/:id/home_page_details' => 'users#get_user_home_details'
   get '/users/:id/repo_page_details' => 'users#get_repo_home_details'
