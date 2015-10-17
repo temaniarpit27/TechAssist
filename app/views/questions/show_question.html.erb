@@ -1,6 +1,10 @@
 <div>
   <h1 align="center"> Question Details </h1>
 </div>
+
+
+
+
     <br>
     <br>
 <div class="input-group">
@@ -14,8 +18,10 @@
     <span>      <input id="description_<%= @question.id %>" value = "<%= @question.description %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1"> </span>
     </div>
 
+
 </br>
 <span class="label label-primary"><%= Repository.find(@question.repository_id).name %></span>
+
 
 </br>
 </br>
@@ -26,7 +32,13 @@
   <input type="text" id="comment_<%= qcomment.id %>" value="<%= qcomment.comment %>"></input>
 <% end %></br>
 
-<input type="text" id="question_comment"></input>
+
+
+
+
+
+
+<textarea type="text" id="question_comment" style="min-width: 50%"placeholder="Add comment"></textarea>
 <input type="button" class= "comment_button" value="Add Comment" data-item-id="<%= @question.id %>" data-item-type="Question"> </input>
 </br>
 </br>
@@ -50,8 +62,9 @@
     <br>
 		<input type="text" id="acomment_<%= answer_comment.id %>" value="<%= answer_comment.comment %>"></input>
 	<% end %></br>
-	<input type="text" id="answer_comment_<%=qanswer.id %>" data-item-id="<%= qanswer.id %>" data-item-type="Answer"> </input>
-	<input type="button" value="Add Comment" class= "comment_button" data-item-id="<%= qanswer.id %>" data-item-type="Answer"> </input>
+  <div>
+<textarea type="text" style="min-width: 50%" id="answer_comment_<%=qanswer.id %>" data-item-id="<%= qanswer.id %>" data-item-type="Answer" placeholder="Add comment"></textarea>
+<input type="button" value="Add Comment" class= "comment_button" data-item-id="<%= qanswer.id %>" data-item-type="Answer"> </input></div>
 	</br>
 <% end %>
 <br>
