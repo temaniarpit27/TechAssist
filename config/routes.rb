@@ -9,7 +9,8 @@ Rails.application.routes.draw do
     get 'settings' => 'users#settings'
   end
   resources :repositories
-
+  get 'repo/get_all' => 'repositories#get_all_repos'
+  get '/home/:user_id' => 'users#home'
   
   resources :questions do
     resources :votes
@@ -29,6 +30,8 @@ Rails.application.routes.draw do
   get '/users/:id/show_question' => 'questions#show_question'
   get '/users/:id/post_question' => 'questions#post_question'
   post '/users/:id/update_details' => "users#update_details"
+
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

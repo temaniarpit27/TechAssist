@@ -9,13 +9,18 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def home
+    @user_id = params[:user_id]
+    @repositories = Repository.all
+  end
+
   #GET /users/1/settings
   def settings
     @users = User.find(params[:user_id])
     @repos = Repository.all
     @checked_repos = UserRepoJoin.where(:user_id => params[:user_id].to_i).pluck(:repository_id)
     #render 'settings'
-    render 'header'
+    render '_header'
   end
 
   def update_details

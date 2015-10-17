@@ -1,24 +1,21 @@
 class User < ActiveRecord::Base
-	has_many :user_repo_joins, class_name: "::UserRepoJoin" , dependent: :destroy
-	has_many :repositories, class_name: "::Repository", through: :user_repo_joins , dependent: :destroy
-	has_many :questions, class_name: "::Question" , dependent: :destroy
-	has_many :answers, class_name: "::Answer" , dependent: :destroy
-	has_many :comments, class_name: "::Comment" , dependent: :destroy
-	has_many :votes, class_name: "::Vote" , dependent: :destroy
-  has_many :repo_contributors, class_name: "::RepoContributor" , dependent: :destroy
-	validates_presence_of :name  
-
+	has_many :user_repo_joins, class_name: "::UserRepoJoin"
+	has_many :repositories, class_name: "::Repository", through: :user_repo_joins
+	has_many :questions, class_name: "::Question"
+	has_many :answers, class_name: "::Answer"
+	has_many :comments, class_name: "::Comment"
+	has_many :votes, class_name: "::Vote"
+  has_many :repo_contributors, class_name: "::ReposContributor"
+	validates_presence_of :name
   has_many :notifications, class_name: "::Notification"
-
 
   def get_all_users
     for id in 1..3
       url = URI("https://api.github.com/orgs/loconsolutions/members?page=#{id}&per_page=100")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
-      req['Authorization'] = 'token 860d784d592178e4cb768ad7055db29071c1f68b'
+      req['Authorization'] = 'token '
       req['Accept'] = 'application/json'
-
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|
         http.request(req)
       }
