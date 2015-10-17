@@ -16,16 +16,23 @@ class QuestionsController < ApplicationController
     @answers =  @question.answers
     @comments =  @question.comments
     @votes = get_votes(@question)
+    answers_hash = []
+    
     for answer in @answers do
-      answer[:comments] = answer.comments
-      answer[:votes] = get_votes(answer)
+      answer_hash = {}
+      answer_hash[:answer]  = answer 
+      answer_hash[:comments] = answer.comments
+      answer_hash[:votes] = get_votes(answer)
+      answers_hash.append(answer_hash)
     end
 
-   render json: {:questions => @question, :comments => @comments, :votes => @votes, :answers => @answers} , status: 200
+
+   render json: {:questions => @question, :comments => @comments, :votes => @votes, :answers => answers_hash} , status: 200
   end
 
   def show_question
     @question = Question.find(params[:id].to_i)
+    @vote = get_votes(@question)
     render "show_question"
   end
 

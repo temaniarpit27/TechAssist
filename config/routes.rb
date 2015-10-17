@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
   resources :repositories
 
+  resources :votes
   
   resources :questions do
     resources :votes
