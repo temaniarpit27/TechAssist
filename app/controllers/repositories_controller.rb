@@ -21,6 +21,11 @@ class RepositoriesController < ApplicationController
   def edit
   end
 
+  def get_all_repos
+    @repositories = Repository.all
+    render :json => @repositories
+  end
+
   # POST /repositories
   # POST /repositories.json
   def create

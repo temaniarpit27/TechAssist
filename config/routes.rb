@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get 'settings' => 'users#settings'
   end
   resources :repositories
-  get '/repositories/get_all' => 'repositories#get_all_repos'
+  get 'repo/get_all' => 'repositories#get_all_repos'
 
   
   resources :questions do
