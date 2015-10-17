@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'experts' => 'repositories#get_experts'
   get '/users/:id/show_question' => 'questions#show_question'
   get '/users/:id/post_question' => 'questions#post_question'
+  post '/users/:id/update_details' => "users#update_details"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

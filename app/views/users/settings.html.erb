@@ -1,24 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>TechAssist</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<%= form_for(@users, remote: true) do |f| %>
-  	<%= f.label :name %>:
-  	<%= f.text_field :name %><br />
-  	<%= f.label :email %>:
-  	<%= f.text_field :email, :disabled=>true %><br />
-  	<%= f.label :Repositories %>: Select the ones you want to subscribe to
-  	<ul id="repoList" style="list-style-type: none">
-  	<% @repos.each do |repo| %>
-  		<li key=<%= repo.id %>> <input type="checkbox"> <%= repo.name %> </li>
-  	<% end %>
-	</ul>
-  <%= f.submit %>
-<% end %>
-</body>
-</html>
+<div id="profile Header" align = "center">
+  <h3> Your Profile </h3>
+</div>
+<div id="fields" align= "center">
+  <br />
+<strong> Name </strong>
+<input type="text" value="<%= @users.name %>"></input>
+<input type="hidden" value="<%= @users.id %>" id="user_id"></input>
+<strong> Email </strong>
+<input type="text" value="<%= @users.email %>"></input><br /> <br />
+</div>
+<div align="center"> <strong> Select Repositories to Subscribe </strong></br> </div>
+<div class=container row>
+  <ul id="repo_list" style="column-count: 3; list-style-type: none">
+    <span id="tripleList">
+  <% @repos.each do |repo| %>
+      <li key=<%= repo.id %>> 
+      <% if @checked_repos.include? repo.id %>
+        <input type="checkbox" class="repo_set" name="repository" value="<%= repo.id %>" checked > <%= repo.name %> </input>
+      <% else %>
+        <input type="checkbox" class="repo_set" name="repository" value="<%= repo.id %>" > <%= repo.name %> </input>
+      <% end %>
+      </li>
+  <% end %>
+</span>
+  </ul>
+</div> 
+<div align = "center">
+<input type="button" id="submit_details" value="Submit"></input>
+</div>
+
+<script type="text/javascript">
+  $("#submit_details").on("click",function(){
+    user_id = $("#user_id").val()
+    checked_repos = $('.repo_set:checked').map(function() { return this.value; }).get();
+    data = {
+      "user_id":user_id,
+      "checked_repos":checked_repos
+    }
+    $.ajax({
+        url: "/users/264/update_details",
+        data: data,
+        type: 'POST',
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(data){
+            window.location.reload()
+            alert("Successfully Updated")
+        },
+        error: function(err){
+        }
+      })
+  })
+
+</script>
+
+
+
