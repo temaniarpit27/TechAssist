@@ -23,7 +23,7 @@
       "checked_repos":checked_repos
     }
     $.ajax({
-        url: "/users/264/update_details",
+        url: "/users/<%= @users.id %>/update_details",
         data: data,
         type: 'POST',
         xhrFields: {

@@ -30,6 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def post_question
+    @user_id = params[:id].to_i
     @repos = Repository.all
     render "post_question"
   end
