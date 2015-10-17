@@ -3,18 +3,6 @@
   <div class="row">
     <div class="col-md-3" id="leftCol">
 
-      <div class="well">
-        <ul class="nav nav-stacked" id="sidebar">
-          <li><a href="#sec1">Section 1</a></li>
-          <li><a href="#sec2">Section 2</a></li>
-          <li><a href="#sec3">Section 3</a></li>
-          <li><a href="#sec4">Section 4</a></li>
-          <li><a href="#sec1">Section 1</a></li>
-          <li><a href="#sec2">Section 2</a></li>
-          <li><a href="#sec3">Section 3</a></li>
-          <li><a href="#sec4">Section 4</a></li>
-        </ul>
-      </div>
     </div>
     <div class="col-md-9">
       <h1>Searched Questions</h1>
@@ -24,6 +12,7 @@
           <% @result.each do |question| %>
             <tr>
               <td><a href=" /users/<%=question.id%>/show_question"><%= question.title %></a></td>
+              <br>
               <!-- <td><%= question.description %></td> -->
               <!-- <td><%= link_to question.title, question_path(id: question.id) %></td> -->
             </tr>
@@ -36,7 +25,7 @@
 
 <style>
 .col-md-9{
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
   #sidebar {
