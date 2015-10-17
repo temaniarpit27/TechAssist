@@ -11,18 +11,28 @@ class Question < ActiveRecord::Base
   has_many :tag_users, class_name: "::TagUser"
   has_one :asked_to_answer, class_name: "::AskedToAnswer"
 
-  # searchable do
-  #   text :title
-  #   integer :repository_id
-  #   integer :user_id
-  #   string :sort_title do
-  #     title.downcase.gsub(/^(an?|the)/, '')
-  #   end
-  # end
+  searchable do
+    text :title
+    text :description
+    integer :repository_id
+    integer :user_id
+    string :sort_title do
+      title.downcase.gsub(/^(an?|the)/, '')
+    end
+  end
 
-  def self.search_title(params)
-    query = params[:string]
+  def self.search_full(query)
     Question.search{fulltext query}.results[0...5]
+  end
+
+  def self.search_with_repo(params)
+    query = params[:q]
+    repo_id = params[:repo_id].to_i
+    res = Question.search do
+            fulltext query
+            with :repository_id, repo_id
+          end
+    res.results[0...5]
   end
 
   def fetch_file_from_git_hub(uri)
@@ -64,6 +74,4 @@ class Question < ActiveRecord::Base
     end
     result_lines
   end
-
-
 end

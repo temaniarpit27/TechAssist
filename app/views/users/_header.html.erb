@@ -1,13 +1,64 @@
+<<<<<<< HEAD
+<%= repo_list = Repository.limit(10) %>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<%= user_path(id: 1) %>">TechAsist</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" id="search_term">
+       </div>
+        <button type="submit" class="btn btn-default" id="search_button">Submit</button>
+      </form>
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
       <ul class="nav navbar-nav" style="border-top:none">
-       <a class="navbar-brand" href="#">TechAssist</a>
-          <li class="navbar-right"><a href="/users/<%=@user_id%>/post_question" class="glyphicon glyphicon-question-sign"></a></li> 
-          <li class="navbar-right"><a href="/settings" class="glyphicon glyphicon-wrench"></a></li> 
+        <a class="navbar-brand" href="/home/1">TechAssist</a>
+          <li class="navbar-right"><a href="/users/<%=@user_id%>/post_question" class="glyphicon glyphicon-question-sign"></a></li>
+          <li class="navbar-right"><a href="/users/<%=@user_id%>/settings" class="glyphicon glyphicon-wrench"></a></li>
           <li class="navbar-right"><a href="/users/<%=@user_id%>/notifications" class="glyphicon glyphicon-bell"></a></li>
           <li href="/home/<%=@user_id%>" class="active navbar-right"><a href="#" class="glyphicon glyphicon-home"></a></li>
       </ul>
     </div>
   </div>
 </nav>
+
+<style>
+.navbar-brand {
+  width: 300px;
+  padding-left: 50px;
+}
+.navbar-form .form-control{
+  width: 400px;
+}
+</style>
+
+<script>
+var repo_id = "0";
+$('.repo_tag').click(function(){
+  repo_id = $(this).data('id');
+  var val = $('.repo_dropdown').html().split('<')[0];
+  var html = $('.repo_dropdown').html().replace(val, $(this).html());
+  $('.repo_dropdown').html(html);
+});
+
+$('#search_button').click(function(){
+  var url = "/search_results?repo_id=" + repo_id + "&q=" + $('#search_term').val();
+  window.open(url);
+});
+</script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def home
     @user_id = params[:user_id]
     @repositories = Repository.all
+    @question = User.find(@user_id).get_all_home_details({:id => @user_id , :status => "trending"})
   end
 
   #GET /users/1/settings
@@ -24,12 +25,17 @@ class UsersController < ApplicationController
   end
 
   def update_details
-    byebug
     UserRepoJoin.where(:user_id =>params[:user_id].to_i).destroy_all
     params[:checked_repos].each do |checked_repo|
       UserRepoJoin.create(:user_id => params[:user_id].to_i , :repository_id => checked_repo.to_i)
     end
     render json: {:message => "update successfull"} , status: 200
+  end
+
+  def get_home_questions
+    @user_id = params[:user_id]
+    @question = User.find(@user_id).get_all_home_details({:id => @user_id , :status => params[:status]})
+    render :partial => 'question_list'
   end
 
 
@@ -56,13 +62,14 @@ class UsersController < ApplicationController
   end
 
   def get_user_home_details
-    all_details = @user.get_all_home_details(params)
-    render json: all_details , status: 200
+    @question = @user.get_all_home_details(params)
+    render :partial => 'question_list'
+  
   end
 
   def get_repo_home_details
-    all_details = @user.repo_related_home_details(params[:repository_id] , params[:status])
-    render json: all_details , status: 200
+    @question = @user.repo_related_home_details(params[:repository_id] , params[:status])
+    render :partial => 'question_list' 
   end
 
 
@@ -81,7 +88,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    byebug
   end
 
   def destroy

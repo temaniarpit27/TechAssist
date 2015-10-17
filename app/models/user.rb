@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def repo_related_home_details(repository_id , status)
+    byebug
     unanswered_questions = []
     repo_questions = Question.where(:repository_id => repository_id).order(created_at: :desc) if status == "recent"
     repo_questions = Question.where(:repository_id => repository_id).joins(:votes).select("questions.id,questions.title,questions.description, count(votes.id) as vote_count").group("questions.id").order("vote_count DESC") if status == "trending"
@@ -51,7 +52,7 @@ class User < ActiveRecord::Base
         unanswered_questions.push(question)
       end
     end
-    repo_questions = Questions.where(:id => unanswered_questions) if status == "unanswered"
+    repo_questions = Question.where(:id => unanswered_questions) if status == "unanswered"
     return repo_questions
   end
 
@@ -68,6 +69,7 @@ class User < ActiveRecord::Base
       end
     end
     repo_questions = Question.where(:id => unanswered_questions) if params[:status] == "unanswered"
+
     return repo_questions
   end
 end

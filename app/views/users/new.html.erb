@@ -1,5 +1,88 @@
-<h1>New User</h1>
+<%= render 'header' %>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3" id="leftCol">
+          	
+			<div class="well"> 
+	    	<ul class="nav nav-stacked" id="sidebar">
+	        <li><a href="#sec1">Section 1</a></li>
+	        <li><a href="#sec2">Section 2</a></li>
+	        <li><a href="#sec3">Section 3</a></li>
+	        <li><a href="#sec4">Section 4</a></li>
+	        <li><a href="#sec1">Section 1</a></li>
+	        <li><a href="#sec2">Section 2</a></li>
+	        <li><a href="#sec3">Section 3</a></li>
+	        <li><a href="#sec4">Section 4</a></li>
+	    	</ul>
+			</div>
+	  </div> 
+	  <div class="col-md-9">
 
-<%= render 'form' %>
+			<h1>New User</h1>
 
-<%= link_to 'Back', users_path %>
+			<%= render 'form' %>
+
+			<!-- <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+	    <li><a href="#sec1">Section 1</a></li>
+	    <li><a href="#sec2">Section 2</a></li>
+	    <li><a href="#sec3">Section 3</a></li>
+	    <li><a href="#sec4">Section 4</a></li>
+ -->
+</div>
+</div>
+</div>
+
+<style>
+.col-md-9{
+	margin-top: 50px;
+}
+
+  #sidebar {
+  	width: 250px;
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    margin-top: 10px;
+/*    background: #000;*/
+}
+
+.well{
+	position: fixed;
+	background-color: #FFFFFF; 
+  border: 0px solid #e3e3e3;
+}
+
+#sidebar li a{
+text-align:center;
+}
+</style>

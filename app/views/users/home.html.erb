@@ -6,43 +6,113 @@
     <div class="inner"></div>
   </div>
   <div class="content">
-  <div id="centeredmenu">
-     <ul>
-        <li><a href="#" class="active">Trending</a></li>
-        <li><a href="#">Recently Asked</a></li>
-        <li><a href="#">Unanswered</a></li>
-     </ul>
-  </div>
-  <div class="list" style="overflow: scroll;">
-    <div class="list-header">
-        <span class="list-name"><center>Repository</center></span>
+    <div id="centeredmenu" style="margin-left:500px">
+       <ul>
+          <li><a class="trending" data-user-id="<%= @user_id%>" style="margin-right:25px;">Trending</a></li>
+          <li><a class="recent" data-user-id="<%= @user_id%>" style="margin-right:25px;">Recently Asked</a></li>
+          <li><a class="unanswered" data-user-id="<%= @user_id%>">Unanswered</a></li>
+       </ul>
     </div>
+    <div class="list" style="overflow: scroll;">
+      <div class="list-header">
+          <span class="list-name"><center>Repository</center></span>
+      </div>
 
-    <div id="request-list-container" style="margin-top:30px;">
-      <% for repository in @repositories do %>
-          <div class="w3-card-4" style="width:100%;">
-            <header class="w3-container w3-blue">
-              <a href=<%= "/repository_info/#{repository.id}" %> style="text-decoration:none;"><h6 style="color:azure;"><center><%= repository.name %></font></center></h6></a>
-            </header>
-          </div>
-      <%end%>
+      <div id="request-list-container" style="margin-top:30px;">
+        <% for repository in @repositories do %>
+            <div class="w3-card-4" style="width:100%;">
+              <header class="w3-container w3-blue">
+                <a data-repo-id="<%= repository.id %>" class="repo_details" style="text-decoration:none;"><h6 style="color:azure;"><center><%= repository.name %></center></h6></a>
+              </header>
+            </div>
+        <%end%>
+      </div>
     </div>
-  </div>
-  <div id="panel" style="padding-left: 10px;float:left"></div>
-
+    <div id="panel" style="padding-left:10px;float:left;margin:0px;width:76%;">
+      <div class="home-question">
+        <%= render partial: "question_list" %>
+      </div>
+    </div>
   </div>
 <%else%>
   <h4 style="color:red; margin-left:10px; margin-top:39px;"> No record found.</h4>
 <%end%>
+
 <script>
- $(document).ready(function(){
-  var userId = @user_id
-  localStorage.setItem("userId", userId)
-  $.ajax({
-      url: "/repo/get_all",
-      method: 'GET'
-    });
-});
+  $(document).ready(function(){
+    var userId = @user_id
+   localStorage.setItem("userId", userId)
+  localStorage.removeItem("repo_id");
+  });
+
+  $(".trending").on('click', function(e){
+    var repo_id = localStorage.getItem("repo_id");
+    if(repo_id != null){
+      url = "/users/<%= @user_id %>/repo_page_details/"+repo_id+"/trending"
+    }
+    else{
+      url = "/users/<%= @user_id %>/get_home_questions/trending"
+    }
+    $.ajax({
+      url: url,
+      method: 'GET',
+      success: function(data){
+        $('.home-question').html('');
+        $('.home-question').html(data);
+      }
+    })
+  });
+  $(".recent").on('click', function(e){
+    var repo_id = localStorage.getItem("repo_id");
+    if(repo_id !== null){
+      url = "/users/<%= @user_id %>/repo_page_details/"+repo_id+"/recent"
+    }
+    else{
+      url = "/users/<%= @user_id %>/get_home_questions/recent"
+    }
+    $.ajax({
+      url: url,
+      method: 'GET',
+      success: function(data){
+        $('.home-question').html('');
+        $('.home-question').html(data);
+      }
+    })
+  });
+  $(".unanswered").on('click', function(e){
+    var repo_id = localStorage.getItem("repo_id");
+    if(repo_id != null){
+      url = "/users/<%= @user_id %>/repo_page_details/"+repo_id+"/unanswered"
+    }
+    else{
+      url = "/users/<%= @user_id %>/get_home_questions/unanswered"
+    }
+    $.ajax({
+      url: url,
+      method: 'GET',
+      success: function(data){
+        $('.home-question').html('');
+        $('.home-question').html(data);
+        
+      }
+    })
+  });
+
+  $(".repo_details").on('click', function(e){
+    var repo_id = $(e.currentTarget).attr('data-repo-id');
+    url = "/users/<%= @user_id %>/repo_page_details/"+repo_id+"/trending";
+    localStorage.setItem("repo_id",repo_id);
+    $.ajax({
+      url: url,
+      method: 'GET',
+      success: function(data){
+        $('.home-question').html('');
+        $('.home-question').html(data);
+      }
+    })
+   
+  });
+
 </script>
 <!DOCTYPE html>
 <html>
