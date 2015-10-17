@@ -9,21 +9,29 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def home
+    @user_id = params[:user_id]
+    @repositories = Repository.all
+  end
+
   #GET /users/1/settings
   def settings
     @users = User.find(params[:user_id])
     @repos = Repository.all
     @checked_repos = UserRepoJoin.where(:user_id => params[:user_id].to_i).pluck(:repository_id)
+    #render 'settings'
     render 'settings'
   end
 
   def update_details
+    byebug
     UserRepoJoin.where(:user_id =>params[:user_id].to_i).destroy_all
     params[:checked_repos].each do |checked_repo|
       UserRepoJoin.create(:user_id => params[:user_id].to_i , :repository_id => checked_repo.to_i)
     end
     render json: {:message => "update successfull"} , status: 200
   end
+
 
   # GET /users/1
   # GET /users/1.json
@@ -53,7 +61,6 @@ class UsersController < ApplicationController
   end
 
   def get_repo_home_details
-    byebug
     all_details = @user.repo_related_home_details(params[:repository_id] , params[:status])
     render json: all_details , status: 200
   end

@@ -1,3 +1,4 @@
+<%= render 'users/header'%>
 <% if @repositories.length!=0 %>
   <div id="action-pop-up" class="pop-up bottom"></div>
   <div id="hover-pop-up"class="pop-up left">
@@ -6,31 +7,29 @@
   </div>
   <div class="content">
   <div id="centeredmenu">
-   <ul>
-      <li><a href="#" class="active">Trending</a></li>
-      <li><a href="#">Recently Asked</a></li>
-      <li><a href="#">Unanswered</a></li>
-   </ul>
-</div>
-    <div class="list" style="overflow: scroll;">
-      <div class="list-header">
-          <span class="list-name"><center>Repository</center></span>
-      </div>
+     <ul>
+        <li><a href="#" class="active">Trending</a></li>
+        <li><a href="#">Recently Asked</a></li>
+        <li><a href="#">Unanswered</a></li>
+     </ul>
+  </div>
+  <div class="list" style="overflow: scroll;">
+    <div class="list-header">
+        <span class="list-name"><center>Repository</center></span>
+    </div>
 
-      <div id="request-list-container" style="margin-top:30px;">
+    <div id="request-list-container" style="margin-top:30px;">
       <% for repository in @repositories do %>
           <div class="w3-card-4" style="width:100%;">
- 
             <header class="w3-container w3-blue">
               <a href=<%= "/repository_info/#{repository.id}" %> style="text-decoration:none;"><h6 style="color:azure;"><center><%= repository.name %></font></center></h6></a>
             </header>
-            <div class="w3-container"></div>
+          </div>
       <%end%>
-
-</div>
-      </div>
     </div>
-    <div id="panel" style="padding-left: 10px;"></div>
+  </div>
+  <div id="panel" style="padding-left: 10px;float:left"></div>
+
   </div>
 <%else%>
   <h4 style="color:red; margin-left:10px; margin-top:39px;"> No record found.</h4>

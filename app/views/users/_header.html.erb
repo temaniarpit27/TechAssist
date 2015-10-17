@@ -1,0 +1,13 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+      <ul class="nav navbar-nav" style="border-top:none">
+       <a class="navbar-brand" href="#">TechAssist</a>
+          <li class="navbar-right"><a href="/users/<%=@user_id%>/post_question" class="glyphicon glyphicon-question-sign"></a></li> 
+          <li class="navbar-right"><a href="/settings" class="glyphicon glyphicon-wrench"></a></li> 
+          <li class="navbar-right"><a href="/users/<%=@user_id%>/notifications" class="glyphicon glyphicon-bell"></a></li>
+          <li href="/home/<%=@user_id%>" class="active navbar-right"><a href="#" class="glyphicon glyphicon-home"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
