@@ -9,7 +9,7 @@ class Repository < ActiveRecord::Base
       url = URI("https://api.github.com/orgs/loconsolutions/repos?per_page=100&page=#{id}")
       req = Net::HTTP::Get.new(url)
       req['Content-Type'] = "application/json"
-      req['Authorization'] = 'token '
+      req['Authorization'] = 'token c59bf60b84754901e5dad2bb7d4ecf379e80cef9'
       req['Accept'] = 'application/json'
     
       res = Net::HTTP.start(url.hostname, url.port,:use_ssl => true) {|http|

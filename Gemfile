@@ -26,6 +26,7 @@ gem 'oj'
 gem 'elasticsearch'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
+gem "twitter-bootstrap-rails"
 
 
 # Use ActiveModel has_secure_password
