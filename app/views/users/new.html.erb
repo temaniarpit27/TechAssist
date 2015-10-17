@@ -18,9 +18,9 @@
 	  </div> 
 	  <div class="col-md-9">
 
-			<h1>New User</h1>
+			<!-- <h1>New User</h1>
 
-			<%= render 'form' %>
+			<%= render 'form' %> -->
 
 			<!-- <li><a href="#sec1">Section 1</a></li>
 	    <li><a href="#sec2">Section 2</a></li>
@@ -60,6 +60,9 @@
 </div>
 
 <style>
+.col-md-9{
+	margin-top: 50px;
+}
 
   #sidebar {
   	width: 250px;
@@ -69,10 +72,17 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
+    margin-top: 10px;
 /*    background: #000;*/
 }
 
 .well{
 	position: fixed;
+	background-color: #FFFFFF; 
+  border: 0px solid #e3e3e3;
+}
+
+#sidebar li a{
+text-align:center;
 }
 </style>

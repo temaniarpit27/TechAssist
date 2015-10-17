@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
 
   get 'experts' => 'repositories#get_experts'
+  get 'search_results' => 'questions#search'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

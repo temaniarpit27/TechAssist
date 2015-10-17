@@ -10,6 +10,7 @@ class Question < ActiveRecord::Base
 
   searchable do
     text :title
+    text :description
     integer :repository_id
     integer :user_id
     string :sort_title do
@@ -17,8 +18,18 @@ class Question < ActiveRecord::Base
     end
   end
 
-  def self.search_title(params)
-    query = params[:string]
+  def self.search_full(query)
     Question.search{fulltext query}.results[0...5]
+  end
+
+  def self.search_with_repo(params)
+    byebug
+    query = params[:q]
+    repo_id = params[:repo_id].to_i
+    res = Question.search do
+            fulltext query
+            with :repository_id, repo_id
+          end
+    res.results[0...5]
   end
 end

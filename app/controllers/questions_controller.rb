@@ -65,7 +65,6 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    byebug
     @question_user = @question.user_id
     if @question_user == question_params[:user_id]
       destroyed_question = @question.destroy
@@ -78,6 +77,17 @@ class QuestionsController < ApplicationController
       message,status="Unauthorized",400
     end
     render json:{:message => message} , status: status
+  end
+
+  def search
+    byebug
+    result = []
+    if params[:repo_id].to_i == 0
+      result = Question.search_full(params[:q])
+    else
+      result = Question.search_with_repo(params)
+    end
+    render json: result, status: 200
   end
 
   private
