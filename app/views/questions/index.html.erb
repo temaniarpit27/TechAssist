@@ -2,8 +2,8 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3" id="leftCol">
-            
-      <div class="well"> 
+
+      <div class="well">
         <ul class="nav nav-stacked" id="sidebar">
           <li><a href="#sec1">Section 1</a></li>
           <li><a href="#sec2">Section 2</a></li>
@@ -15,7 +15,7 @@
           <li><a href="#sec4">Section 4</a></li>
         </ul>
       </div>
-    </div> 
+    </div>
     <div class="col-md-9">
       <h1>Searched Questions</h1>
 
@@ -23,7 +23,7 @@
         <tbody>
           <% @result.each do |question| %>
             <tr>
-              <td><a href="<%= question_path(id: question.id) %>"><%= question.title %></a></td>
+              <td><a href=" /users/<%=question.id%>/show_question"><%= question.title %></a></td>
               <!-- <td><%= question.description %></td> -->
               <!-- <td><%= link_to question.title, question_path(id: question.id) %></td> -->
             </tr>
@@ -53,7 +53,7 @@
 
 .well{
   position: fixed;
-  background-color: #FFFFFF; 
+  background-color: #FFFFFF;
   border: 0px solid #e3e3e3;
 }
 
