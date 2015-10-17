@@ -40,7 +40,7 @@
 
 <script>
   $(document).ready(function(){
-    var userId = @user_id
+    var userId = <% @user_id %>
    localStorage.setItem("userId", userId)
   localStorage.removeItem("repo_id");
   });
