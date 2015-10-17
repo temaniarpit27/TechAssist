@@ -56,7 +56,6 @@ class UsersController < ApplicationController
   end
 
   def get_repo_home_details
-    byebug
     all_details = @user.repo_related_home_details(params[:repository_id] , params[:status])
     render json: all_details , status: 200
   end
