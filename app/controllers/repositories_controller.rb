@@ -3,9 +3,8 @@ class RepositoriesController < ApplicationController
 
   # GET /repositories
   # GET /repositories.json
-  def get_all_repos
+  def index
     @repositories = Repository.all
-    render :json => {:response => @repositories}, status:200
   end
 
   # GET /repositories/1
