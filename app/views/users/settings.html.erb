@@ -1,18 +1,33 @@
+<div id="profile Header" align = "center">
+  <h3> Your Profile </h3>
+</div>
+<div id="fields" align= "center">
+  <br />
 <strong> Name </strong>
 <input type="text" value="<%= @users.name %>"></input>
 <input type="hidden" value="<%= @users.id %>" id="user_id"></input>
-<strong> Url </strong>
-<input type="text" value="<%= @users.email %>"></input></br>
-<strong> Select Repositories to Subscribe </strong></br>
-<% @repos.each do |repo| %>
-  <% if @checked_repos.include? repo.id %>
-    <input type="checkbox" class="repo_set" name="repository" value="<%= repo.id %>" checked > <%= repo.name %> </input>
-  <% else %>
-    <input type="checkbox" class="repo_set" name="repository" value="<%= repo.id %>" > <%= repo.name %> </input>
+<strong> Email </strong>
+<input type="text" value="<%= @users.email %>"></input><br /> <br />
+</div>
+<div align="center"> <strong> Select Repositories to Subscribe </strong></br> </div>
+<div class=container row>
+  <ul id="repo_list" style="column-count: 3; list-style-type: none">
+    <span id="tripleList">
+  <% @repos.each do |repo| %>
+      <li key=<%= repo.id %>> 
+      <% if @checked_repos.include? repo.id %>
+        <input type="checkbox" class="repo_set" name="repository" value="<%= repo.id %>" checked > <%= repo.name %> </input>
+      <% else %>
+        <input type="checkbox" class="repo_set" name="repository" value="<%= repo.id %>" > <%= repo.name %> </input>
+      <% end %>
+      </li>
   <% end %>
-  </br>
-<% end %>
+</span>
+  </ul>
+</div> 
+<div align = "center">
 <input type="button" id="submit_details" value="Submit"></input>
+</div>
 
 <script type="text/javascript">
   $("#submit_details").on("click",function(){
