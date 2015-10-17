@@ -20,7 +20,7 @@
 		data = {
 			"title":$("#question_title").val(),
 			"description":$("#question_description").val(),
-			"user_id":264,
+			"user_id":"<%= @user_id %>",
 			"repository_id":$("#repo_data").val()
 		}
 		$.ajax({

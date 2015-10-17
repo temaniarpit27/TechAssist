@@ -18,12 +18,14 @@ class UsersController < ApplicationController
   end
 
   def update_details
+    byebug
     UserRepoJoin.where(:user_id =>params[:user_id].to_i).destroy_all
     params[:checked_repos].each do |checked_repo|
       UserRepoJoin.create(:user_id => params[:user_id].to_i , :repository_id => checked_repo.to_i)
     end
     render json: {:message => "update successfull"} , status: 200
   end
+
 
   # GET /users/1
   # GET /users/1.json
