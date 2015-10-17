@@ -1,34 +1,70 @@
-<span> Title </span>
-<input type="text" id="title_<%= @question.id %>" value = "<%= @question.title %>"> </input>
+<div>
+  <h1 align="center"> Question Details </h1>
+</div>
+
+
+
+
+    <br>
+    <br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Title</span>
+      <input id="title_<%= @question.id %>" value = "<%= @question.title %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Description</span>
+    <span>      <input id="description_<%= @question.id %>" value = "<%= @question.description %> "type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1"> </span>
+    </div>
+
+
 </br>
-<span> Description </span>
-<input type="text" id="description_<%= @question.id %>" value = "<%= @question.description %>">  </input>
+<span class="label label-primary"><%= Repository.find(@question.repository_id).name %></span>
+
+
 </br>
-<span> Tag =>>>>>>>> </span>
-<span> <%= Repository.find(@question.repository_id).name %> </span>
+</br>
 </br>
 <strong> Comments For Question </strong>
 <% @question.comments.each do |qcomment| %>
-	<input type="text" id="comment_<%= qcomment.id %>" value="<%= qcomment.comment %>"></input> 
+  <br>
+  <input type="text" id="comment_<%= qcomment.id %>" value="<%= qcomment.comment %>"></input>
 <% end %></br>
+
+
+
+
+
+
+
 <input type="text" id="question_comment"></input>
 <input type="button" class= "comment_button" value="Add Comment" data-item-id="<%= @question.id %>" data-item-type="Question"> </input>
 </br>
-<strong> Answers </strong>
+</br>
+</br>
 </br>
 <% @question.answers.each do |qanswer| %>
+  <br>
+<strong> Answer </strong>
+<br>
 	<input type="text" id="answer_<%= qanswer.id %>" value="<%= qanswer.answer %>"></input>
 	</br>
+</br>
 	<strong> Answer_Comments </strong>
 	<% qanswer.comments.each do |answer_comment| %>
+    <br>
 		<input type="text" id="acomment_<%= answer_comment.id %>" value="<%= answer_comment.comment %>"></input>
 	<% end %></br>
 	<input type="text" id="answer_comment_<%=qanswer.id %>" data-item-id="<%= qanswer.id %>" data-item-type="Answer"> </input>
 	<input type="button" value="Add Comment" class= "comment_button" data-item-id="<%= qanswer.id %>" data-item-type="Answer"> </input>
 	</br>
 <% end %>
+<br>
+<br>
 <textarea id="answer_text" placeholder="Add your answer"></textarea>
 <input type="button" id="add_answer" value="Add Answer"> </input>
+<br>
 
 
 
